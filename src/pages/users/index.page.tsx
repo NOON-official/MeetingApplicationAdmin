@@ -1,12 +1,12 @@
 import Section from "@/components/Section";
 import BaseLayout from "@/layouts/BaseLayout";
 
-const IndexPage = () => (
+const UsersPage = () => (
   <BaseLayout>
     <Section center my="32px">
-      <h2>관리자 페이지</h2>
+      <h2>전체 회원</h2>
     </Section>
   </BaseLayout>
 );
 
-export default IndexPage;
+export default UsersPage;

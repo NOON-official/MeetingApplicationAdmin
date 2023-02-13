@@ -10,16 +10,21 @@
   },
   "dependencies": {
     "@next/font": "13.1.6",
+    "@reduxjs/toolkit": "^1.9.2",
     "antd": "^5.2.0",
     "next": "13.1.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-redux": "^8.0.5",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@noon/eslint-config-noon": "https://github.com/NOON-official/eslint-config-noon.git",
+    "@svgr/webpack": "^6.5.1",
     "@types/node": "18.13.0",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.10",
+    "@types/styled-components": "^5.1.26",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "prettier": "^2.8.4",

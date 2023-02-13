@@ -1,3 +1,6 @@
 {
-  "extends": ["next/core-web-vitals", "@noon/eslint-config-noon"]
+  "extends": ["next/core-web-vitals", "@noon/eslint-config-noon"],
+  "rules": {
+    "@typescript-eslint/no-use-before-define": "off"
+  }
 }

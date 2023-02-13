@@ -1,5 +1,5 @@
-import BaseLayout from '@/layouts/BaseLayout'
-import Link from 'next/link'
+import BaseLayout from "@/layouts/BaseLayout";
+import Link from "next/link";
 
 const IndexPage = () => (
   <BaseLayout title="Home | Next.js + TypeScript">
@@ -8,6 +8,6 @@ const IndexPage = () => (
       <Link href="/about">About</Link>
     </p>
   </BaseLayout>
-)
+);
 
-export default IndexPage
+export default IndexPage;

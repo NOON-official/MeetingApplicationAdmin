@@ -1,9 +1,8 @@
-
-import { ConfigProvider } from 'antd';
-import type { AppProps } from 'next/app';
-import Head from 'next/head';
-import theme from '../styles/theme';
-import 'antd/dist/reset.css'
+import { ConfigProvider } from "antd";
+import type { AppProps } from "next/app";
+import Head from "next/head";
+import theme from "../styles/theme";
+import "antd/dist/reset.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

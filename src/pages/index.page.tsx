@@ -1,11 +1,11 @@
 import Section from "@/components/Section";
-import { useGetTeamCountsQuery } from "@/features/team/api";
+import { useGetTeamCountQuery } from "@/features/team/api";
 import BaseLayout from "@/layouts/BaseLayout";
 import styled from "styled-components";
 import AppliedTeamTable from "./AppliedTeamTable";
 
 const IndexPage = () => {
-  const { data: teamData } = useGetTeamCountsQuery();
+  const { data: teamData } = useGetTeamCountQuery();
 
   const teamsPerRound = teamData?.teamsPerRound || 0;
   const twoman = teamData?.[`2vs2`].male || 0;

@@ -19,8 +19,8 @@ const teamApi = createApi({
     getTeamMembersCountOneWeek: builder.query({
       query: () => `teams/members/count/one-week`,
     }),
-    getTeamCounts: builder.query<TeamCountResult, void>({
-      query: () => `teams/counts`,
+    getTeamCount: builder.query<TeamCountResult, void>({
+      query: () => `teams/count`,
     }),
     getAdminTeams: builder.query<AdminTeamsResult, AdminTeamsParams>({
       query: (params) => ({
@@ -33,7 +33,7 @@ const teamApi = createApi({
 
 export const {
   useGetTeamMembersCountOneWeekQuery,
-  useGetTeamCountsQuery,
+  useGetTeamCountQuery,
   useGetAdminTeamsQuery,
 } = teamApi;
 

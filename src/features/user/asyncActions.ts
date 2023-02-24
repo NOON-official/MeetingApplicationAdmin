@@ -17,12 +17,3 @@ export const refreshJwtToken = createAsyncThunk(
     return response.data;
   }
 );
-
-export const loadUserAgreements = createAsyncThunk(
-  `user/agreements`,
-  async () => {
-    const response = await backend.get(`/users/agreements`);
-
-    return response.data;
-  }
-);

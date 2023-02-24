@@ -21,8 +21,9 @@ export default function Header() {
   const handleLogin = useCallback(() => {
     window.open(
       `${API_URL}/auth/signin/kakao?redirectUrl=${encodeURIComponent(
-        window.location.href
-      )}`
+        `${window.location.origin}/auth/callback`
+      )}`,
+      `_self`
     );
   }, []);
 

@@ -2,18 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import jwtDecode from "jwt-decode";
 import { STORAGE_KEY_ACCESS_TOKEN } from "@/config/constants";
 import browserStorage from "@/utils/browserStorage";
-import { loadUserAgreements, logout, refreshJwtToken } from "./asyncActions";
+import { logout, refreshJwtToken } from "./asyncActions";
 
 interface UserState {
   accessToken: string | null;
   id: number | null;
-  agreement: any;
 }
 
 const initialState: UserState = {
   accessToken: browserStorage.getItem(`accessToken`),
   id: null,
-  agreement: null,
 };
 
 const userSlice = createSlice({
@@ -47,10 +45,8 @@ const userSlice = createSlice({
     builder.addCase(refreshJwtToken.rejected, (state) => {
       state.accessToken = null;
       state.id = null;
+
       browserStorage.removeItem(STORAGE_KEY_ACCESS_TOKEN);
-    });
-    builder.addCase(loadUserAgreements.fulfilled, (state, action) => {
-      state.agreement = action.payload;
     });
   },
 });

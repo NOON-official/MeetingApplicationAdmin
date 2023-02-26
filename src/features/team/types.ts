@@ -17,7 +17,7 @@ export interface AdminTeamsResult {
 }
 
 export interface Team {
-  teamId: string;
+  teamId: number;
   matchingCount: number;
   nickname: string;
   intro: string;

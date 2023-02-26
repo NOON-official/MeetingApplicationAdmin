@@ -1,12 +1,12 @@
 import Section from "@/components/Section";
-import { useGetTeamCountQuery } from "@/features/team/api";
+import { useGetAdminTeamCountQuery } from "@/features/team/api";
 import BaseLayout from "@/layouts/BaseLayout";
 import { Col, Row } from "antd";
 import styled from "styled-components";
 import AppliedTeamTable from "./AppliedTeamTable";
 
 const IndexPage = () => {
-  const { data: teamData } = useGetTeamCountQuery();
+  const { data: teamData } = useGetAdminTeamCountQuery();
 
   const teamsPerRound = teamData?.teamsPerRound || 0;
   const twoman = teamData?.[`2vs2`].male || 0;

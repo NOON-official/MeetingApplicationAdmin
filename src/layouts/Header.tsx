@@ -1,15 +1,35 @@
+import { API_URL } from "@/config/constants";
+import { logout } from "@/features/user/asyncActions";
+import useAppDispatch from "@/hooks/useAppDispatch";
+import useAppSelector from "@/hooks/useAppSelector";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useCallback } from "react";
 import styled from "styled-components";
 import LogoSVG from "../assets/svgs/Logo.svg";
 
 export default function Header() {
   const router = useRouter();
-  console.log(router.pathname);
+  const dispatch = useAppDispatch();
+  const { accessToken } = useAppSelector((state) => state.user);
+
   const isHome = router.pathname === `/`;
   const isMatchingPending = router.pathname === `/matching/pending`;
   const isMatchinDone = router.pathname === `/matching/done`;
   const isUsers = router.pathname === `/users`;
+
+  const handleLogin = useCallback(() => {
+    window.open(
+      `${API_URL}/auth/signin/kakao?redirectUrl=${encodeURIComponent(
+        `${window.location.origin}/auth/callback`
+      )}`,
+      `_self`
+    );
+  }, []);
+
+  const handleLogout = useCallback(() => {
+    dispatch(logout());
+  }, [dispatch]);
 
   return (
     <Container>
@@ -20,7 +40,11 @@ export default function Header() {
           </Link>
         </Logo>
         <LoginBox>
-          <LoginText>로그인</LoginText>
+          {accessToken ? (
+            <LoginText onClick={handleLogout}>로그아웃</LoginText>
+          ) : (
+            <LoginText onClick={handleLogin}>로그인</LoginText>
+          )}
         </LoginBox>
       </NavContainer>
       <MenuContainer>

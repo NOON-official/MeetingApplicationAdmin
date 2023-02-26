@@ -107,7 +107,12 @@ export default function AppliedTeamTable({
 
   return (
     <Container>
-      <Table rowKey="teamId" dataSource={data?.teams} columns={columns} />
+      <Table
+        rowKey="teamId"
+        dataSource={data?.teams}
+        columns={columns}
+        pagination={false}
+      />
     </Container>
   );
 }

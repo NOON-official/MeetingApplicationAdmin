@@ -15,6 +15,7 @@ const teamApi = createApi({
       return headers;
     },
   }),
+  tagTypes: [`Teams`],
   endpoints: (builder) => ({
     getTeamMembersCountOneWeek: builder.query({
       query: () => `teams/members/count/one-week`,
@@ -27,6 +28,25 @@ const teamApi = createApi({
         url: `admin/teams`,
         params,
       }),
+      providesTags: [`Teams`],
+    }),
+    postMatchings: builder.mutation({
+      query() {
+        return {
+          url: `admin/matchings`,
+          method: `POST`,
+        };
+      },
+      invalidatesTags: [`Teams`],
+    }),
+    deleteTeamId: builder.mutation<any, { teamId: number }>({
+      query({ teamId }) {
+        return {
+          url: `admin/teams/${teamId}`,
+          method: `DELETE`,
+        };
+      },
+      invalidatesTags: [`Teams`],
     }),
   }),
 });
@@ -35,6 +55,8 @@ export const {
   useGetTeamMembersCountOneWeekQuery,
   useGetAdminTeamCountQuery,
   useGetAdminTeamsQuery,
+  usePostMatchingsMutation,
+  useDeleteTeamIdMutation,
 } = teamApi;
 
 export default teamApi;

@@ -1,18 +1,50 @@
 import Section from "@/components/Section";
-import { useGetAdminTeamCountQuery } from "@/features/team/api";
+import {
+  useDeleteTeamIdMutation,
+  useGetAdminTeamCountQuery,
+  usePostMatchingsMutation,
+} from "@/features/team/api";
 import BaseLayout from "@/layouts/BaseLayout";
-import { Col, Row } from "antd";
+import { Button, Col, Input, Row } from "antd";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 import AppliedTeamTable from "./AppliedTeamTable";
 
 const IndexPage = () => {
   const { data: teamData } = useGetAdminTeamCountQuery();
+  const [postMatchings] = usePostMatchingsMutation();
+  const [deleteTeamId] = useDeleteTeamIdMutation();
+  const [deleteTeamIdInput, setDeleteTeamInput] = useState<string>(``);
 
   const teamsPerRound = teamData?.teamsPerRound || 0;
   const twoman = teamData?.[`2vs2`].male || 0;
   const twogirl = teamData?.[`2vs2`].female || 0;
   const threeman = teamData?.[`3vs3`].male || 0;
   const threegirl = teamData?.[`3vs3`].female || 0;
+
+  const doMatching = useCallback(async () => {
+    if (window.confirm(`정말 매칭을 적용하시겠습니까?`)) {
+      try {
+        await postMatchings({}).unwrap();
+        window.alert(`매칭 완료되었습니다`);
+      } catch (e) {
+        window.alert(`매칭중 오류가 발생하였습니다`);
+        console.error(e);
+      }
+    }
+  }, [postMatchings]);
+
+  const onDeleteTeamSubmit = useCallback(async () => {
+    const teamId = Number(deleteTeamIdInput);
+
+    if (typeof teamId === `number`) {
+      await deleteTeamId({ teamId }).unwrap();
+      window.alert(`팀 신청정보가 삭제되었습니다`);
+      setDeleteTeamInput(``);
+      return;
+    }
+    window.alert(`팀 ID가 올바르지 않습니다`);
+  }, [deleteTeamId, deleteTeamIdInput]);
 
   return (
     <BaseLayout>
@@ -39,29 +71,29 @@ const IndexPage = () => {
         <MatchingBox>
           <SubTitle>2 : 2 미팅</SubTitle>
           <TotalBar>
-            <Number>{twoman}</Number>
+            <NumberText>{twoman}</NumberText>
             <LeftBar>
               <LeftBarProgress progress={twoman / teamsPerRound} />
             </LeftBar>
             <RightBar>
               <RightBarProgress progress={twogirl / teamsPerRound} />
             </RightBar>
-            <Number>{twogirl}</Number>
+            <NumberText>{twogirl}</NumberText>
           </TotalBar>
           <SubTitle>3 : 3 미팅</SubTitle>
           <TotalBar>
-            <Number>{threeman}</Number>
+            <NumberText>{threeman}</NumberText>
             <LeftBar>
               <LeftBarProgress progress={threeman / teamsPerRound} />
             </LeftBar>
             <RightBar>
               <RightBarProgress progress={threegirl / teamsPerRound} />
             </RightBar>
-            <Number>{threegirl}</Number>
+            <NumberText>{threegirl}</NumberText>
           </TotalBar>
         </MatchingBox>
       </Section>
-      <Section>
+      <Section my="32px">
         <Row gutter={16}>
           <Col lg={24} xl={12}>
             <Title>2:2 남자</Title>
@@ -72,6 +104,8 @@ const IndexPage = () => {
             <AppliedTeamTable memberCount={2} gender="female" />
           </Col>
         </Row>
+      </Section>
+      <Section my="32px">
         <Row gutter={16}>
           <Col lg={24} xl={12}>
             <Title>3:3 남자</Title>
@@ -82,6 +116,25 @@ const IndexPage = () => {
             <AppliedTeamTable memberCount={3} gender="female" />
           </Col>
         </Row>
+      </Section>
+      <Section center my="32px">
+        <Button size="large" type="primary" onClick={doMatching}>
+          매칭 적용
+        </Button>
+      </Section>
+      <Section center>
+        <Input.Group compact>
+          <Input
+            size="large"
+            style={{ width: `200px` }}
+            placeholder="삭제 ID"
+            value={deleteTeamIdInput}
+            onChange={(e) => setDeleteTeamInput(e.target.value)}
+          />
+          <Button size="large" type="primary" onClick={onDeleteTeamSubmit}>
+            삭제 적용
+          </Button>
+        </Input.Group>
       </Section>
     </BaseLayout>
   );
@@ -165,7 +218,7 @@ const RightBarProgress = styled.div<{ progress: number }>`
   border-bottom-right-radius: 10px;
 `;
 
-const Number = styled.p`
+const NumberText = styled.p`
   width: 10px;
   padding: 0 10px;
   font-weight: 400;

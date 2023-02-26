@@ -1,6 +1,7 @@
 import Section from "@/components/Section";
 import { useGetTeamCountQuery } from "@/features/team/api";
 import BaseLayout from "@/layouts/BaseLayout";
+import { Col, Row } from "antd";
 import styled from "styled-components";
 import AppliedTeamTable from "./AppliedTeamTable";
 
@@ -58,13 +59,29 @@ const IndexPage = () => {
             </RightBar>
             <Number>{threegirl}</Number>
           </TotalBar>
-          <Title>{`미팅 별로 ${
-            teamsPerRound * 2
-          }팀이 채워지면 바로 매칭이 시작됩니다!`}</Title>
         </MatchingBox>
       </Section>
       <Section>
-        <AppliedTeamTable memberCount={2} gender="male" />
+        <Row gutter={16}>
+          <Col lg={24} xl={12}>
+            <Title>2:2 남자</Title>
+            <AppliedTeamTable memberCount={2} gender="male" />
+          </Col>
+          <Col lg={24} xl={12}>
+            <Title>2:2 여자</Title>
+            <AppliedTeamTable memberCount={2} gender="female" />
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col lg={24} xl={12}>
+            <Title>3:3 남자</Title>
+            <AppliedTeamTable memberCount={3} gender="male" />
+          </Col>
+          <Col lg={24} xl={12}>
+            <Title>3:3 여자</Title>
+            <AppliedTeamTable memberCount={3} gender="female" />
+          </Col>
+        </Row>
       </Section>
     </BaseLayout>
   );
@@ -82,9 +99,6 @@ const StatTable = styled.table`
 `;
 
 const MatchingBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   margin-top: 20px;
   font-weight: 400;
   font-size: 20px;
@@ -158,10 +172,10 @@ const Number = styled.p`
   font-size: 15px;
 `;
 
-const Title = styled.p`
-  margin-top: 5%;
-  width: 100%;
-  color: #eb8888;
+const Title = styled.h2`
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
 `;
 
 export default IndexPage;

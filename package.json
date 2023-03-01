@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
+    "build:stage": "env-cmd -f .env.stage next build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -28,6 +29,7 @@
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.10",
     "@types/styled-components": "^5.1.26",
+    "env-cmd": "^10.1.0",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "prettier": "^2.8.4",

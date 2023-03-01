@@ -27,5 +27,5 @@ export default function JwtProvider() {
   // JWT 토큰 주기적 Refresh 시도 (10분 간격)
   useInterval(checkTokenAndRefresh, 10 * 60 * 1000);
 
-  return <></>;
+  return null;
 }

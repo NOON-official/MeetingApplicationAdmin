@@ -20,7 +20,7 @@ const teamApi = createApi({
       return headers;
     },
   }),
-  tagTypes: [`Teams`],
+  tagTypes: [`Teams`, `Matchings`],
   endpoints: (builder) => ({
     getTeamMembersCountOneWeek: builder.query({
       query: () => `teams/members/count/one-week`,
@@ -35,10 +35,9 @@ const teamApi = createApi({
       }),
       providesTags: [`Teams`],
     }),
-    getAdminMatchings: builder.query<AdminMatchingsResult>({
-      query: (params) => ({
+    getAdminMatchings: builder.query<AdminMatchingsResult, void>({
+      query: () => ({
         url: `admin/matchings`,
-        params,
       }),
       providesTags: [`Matchings`],
     }),

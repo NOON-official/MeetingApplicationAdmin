@@ -1,10 +1,10 @@
+import { RequestParams } from "../types";
+
 export interface TeamCountResult {
   teamsPerRound: number;
   "2vs2": { male: number; female: number };
   "3vs3": { male: number; female: number };
 }
-
-export type RequestParams = Record<string, string | number>;
 
 export interface AdminTeamsParams extends RequestParams {
   status: "APPLIED" | "MATCHED" | "FAILED" | "PARTNER_TEAM_REFUSED";

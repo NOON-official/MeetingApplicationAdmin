@@ -74,7 +74,7 @@ export default function AppliedTeamTable({
     {
       title: `자기소개`,
       dataIndex: `intro`,
-      width: 150,
+      width: 250,
     },
     {
       title: `인원`,
@@ -109,8 +109,8 @@ export default function AppliedTeamTable({
       title: `대학교`,
       dataIndex: `universities`,
       render: (value) =>
-        value.map((id: number) => getUniversity(id)?.name).join(`, `),
-      width: 120,
+        value.map((id: number) => getUniversity(id)?.name).join(`,\n`),
+      width: 150,
     },
     {
       title: `동대학선호`,
@@ -153,5 +153,6 @@ const Container = styled.div`
   }
   .ant-table-tbody > tr > td {
     padding: 8px;
+    white-space: pre-line;
   }
 `;

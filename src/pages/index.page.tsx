@@ -80,11 +80,11 @@ const IndexPage = () => {
       </Section>
       <Section my="32px">
         <Row gutter={[16, 16]}>
-          <Col lg={24} xxl={12}>
+          <Col lg={24}>
             <TableTitle>2:2 남자</TableTitle>
             <AppliedTeamTable memberCount={2} gender="male" />
           </Col>
-          <Col lg={24} xxl={12}>
+          <Col lg={24}>
             <TableTitle>2:2 여자</TableTitle>
             <AppliedTeamTable memberCount={2} gender="female" />
           </Col>
@@ -92,17 +92,17 @@ const IndexPage = () => {
       </Section>
       <Section my="32px">
         <Row gutter={[16, 16]}>
-          <Col lg={24} xxl={12}>
+          <Col lg={24}>
             <TableTitle>3:3 남자</TableTitle>
             <AppliedTeamTable memberCount={3} gender="male" />
           </Col>
-          <Col lg={24} xxl={12}>
+          <Col lg={24}>
             <TableTitle>3:3 여자</TableTitle>
             <AppliedTeamTable memberCount={3} gender="female" />
           </Col>
         </Row>
       </Section>
-      <Section center my="32px">
+      <Section center py="32px">
         <Button size="large" type="primary" onClick={doMatching}>
           매칭 적용
         </Button>

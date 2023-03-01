@@ -38,16 +38,16 @@ const IndexPage = () => {
         <StatTable>
           <tbody>
             <tr>
-              <td>3:3</td>
-              <td>남 : {threeman}</td>
-              <td>여 : {threegirl}</td>
-              <td>전체 : {threeman + threegirl}</td>
-            </tr>
-            <tr>
               <td>2:2</td>
               <td>남 : {twoman}</td>
               <td>여 : {twogirl}</td>
               <td>전체 : {twoman + twogirl}</td>
+            </tr>
+            <tr>
+              <td>3:3</td>
+              <td>남 : {threeman}</td>
+              <td>여 : {threegirl}</td>
+              <td>전체 : {threeman + threegirl}</td>
             </tr>
           </tbody>
         </StatTable>

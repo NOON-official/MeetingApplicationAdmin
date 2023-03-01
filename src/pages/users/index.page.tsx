@@ -50,7 +50,7 @@ const columns: ColumnsType<User> = [
   },
   {
     title: `회원코드`,
-    dataIndex: `referralId`,
+    dataIndex: `referralID`,
     width: 100,
   },
   {

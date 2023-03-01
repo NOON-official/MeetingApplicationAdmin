@@ -5,8 +5,9 @@ import { refreshJwtToken } from "@/features/user/asyncActions";
 import { STORAGE_KEY_ACCESS_TOKEN } from "@/config/constants";
 import { AppDispatch } from "@/store";
 import browserStorage from "@/utils/browserStorage";
+import dynamic from "next/dynamic";
 
-export default function JwtProvider() {
+function StaticJwtProvider() {
   const dispatch = useDispatch<AppDispatch>();
 
   const checkTokenAndRefresh = useCallback(() => {
@@ -29,3 +30,9 @@ export default function JwtProvider() {
 
   return null;
 }
+
+const JwtProvider = dynamic(() => Promise.resolve(StaticJwtProvider), {
+  ssr: false,
+});
+
+export default JwtProvider;

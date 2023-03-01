@@ -1,20 +1,17 @@
 import Section from "@/components/Section";
 import {
-  useDeleteTeamIdMutation,
   useGetAdminTeamCountQuery,
   usePostMatchingsMutation,
 } from "@/features/team/api";
 import LayoutWithHeader from "@/layouts/LayoutWithHeader";
-import { Button, Col, Input, Row } from "antd";
-import { useCallback, useState } from "react";
+import { Button, Col, Row } from "antd";
+import { useCallback } from "react";
 import styled from "styled-components";
 import AppliedTeamTable from "./AppliedTeamTable";
 
 const IndexPage = () => {
   const { data: teamData } = useGetAdminTeamCountQuery();
   const [postMatchings] = usePostMatchingsMutation();
-  const [deleteTeamId] = useDeleteTeamIdMutation();
-  const [deleteTeamIdInput, setDeleteTeamInput] = useState<string>(``);
 
   const teamsPerRound = teamData?.teamsPerRound || 0;
   const twoman = teamData?.[`2vs2`].male || 0;
@@ -33,18 +30,6 @@ const IndexPage = () => {
       }
     }
   }, [postMatchings]);
-
-  const onDeleteTeamSubmit = useCallback(async () => {
-    const teamId = Number(deleteTeamIdInput);
-
-    if (typeof teamId === `number`) {
-      await deleteTeamId({ teamId }).unwrap();
-      window.alert(`팀 신청정보가 삭제되었습니다`);
-      setDeleteTeamInput(``);
-      return;
-    }
-    window.alert(`팀 ID가 올바르지 않습니다`);
-  }, [deleteTeamId, deleteTeamIdInput]);
 
   return (
     <LayoutWithHeader>
@@ -94,25 +79,25 @@ const IndexPage = () => {
         </MatchingBox>
       </Section>
       <Section my="32px">
-        <Row gutter={16}>
-          <Col lg={24} xl={12}>
-            <Title>2:2 남자</Title>
+        <Row gutter={[16, 16]}>
+          <Col lg={24} xxl={12}>
+            <TableTitle>2:2 남자</TableTitle>
             <AppliedTeamTable memberCount={2} gender="male" />
           </Col>
-          <Col lg={24} xl={12}>
-            <Title>2:2 여자</Title>
+          <Col lg={24} xxl={12}>
+            <TableTitle>2:2 여자</TableTitle>
             <AppliedTeamTable memberCount={2} gender="female" />
           </Col>
         </Row>
       </Section>
       <Section my="32px">
-        <Row gutter={16}>
-          <Col lg={24} xl={12}>
-            <Title>3:3 남자</Title>
+        <Row gutter={[16, 16]}>
+          <Col lg={24} xxl={12}>
+            <TableTitle>3:3 남자</TableTitle>
             <AppliedTeamTable memberCount={3} gender="male" />
           </Col>
-          <Col lg={24} xl={12}>
-            <Title>3:3 여자</Title>
+          <Col lg={24} xxl={12}>
+            <TableTitle>3:3 여자</TableTitle>
             <AppliedTeamTable memberCount={3} gender="female" />
           </Col>
         </Row>
@@ -121,20 +106,6 @@ const IndexPage = () => {
         <Button size="large" type="primary" onClick={doMatching}>
           매칭 적용
         </Button>
-      </Section>
-      <Section center>
-        <Input.Group compact>
-          <Input
-            size="large"
-            style={{ width: `200px` }}
-            placeholder="삭제 ID"
-            value={deleteTeamIdInput}
-            onChange={(e) => setDeleteTeamInput(e.target.value)}
-          />
-          <Button size="large" type="primary" onClick={onDeleteTeamSubmit}>
-            삭제 적용
-          </Button>
-        </Input.Group>
       </Section>
     </LayoutWithHeader>
   );
@@ -225,10 +196,11 @@ const NumberText = styled.p`
   font-size: 15px;
 `;
 
-const Title = styled.h2`
+const TableTitle = styled.h2`
   font-size: 32px;
   font-weight: bold;
   text-align: center;
+  margin: 20px 0;
 `;
 
 export default IndexPage;

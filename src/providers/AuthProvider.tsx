@@ -1,6 +1,7 @@
 import { useEffect, ReactNode } from "react";
 import { useRouter } from "next/router";
 import useAppSelector from "@/hooks/useAppSelector";
+import dynamic from "next/dynamic";
 
 type Props = {
   children?: ReactNode;
@@ -8,7 +9,7 @@ type Props = {
 
 const authRoutes = [`/auth/signin`, `/auth/callback`];
 
-export default function AuthProvider({ children }: Props) {
+function StaticAuthProvider({ children }: Props) {
   const { push, pathname } = useRouter();
   const { accessToken } = useAppSelector((state) => state.user);
 
@@ -25,3 +26,9 @@ export default function AuthProvider({ children }: Props) {
 
   return <>{children}</>;
 }
+
+const AuthProvider = dynamic(() => Promise.resolve(StaticAuthProvider), {
+  ssr: false,
+});
+
+export default AuthProvider;

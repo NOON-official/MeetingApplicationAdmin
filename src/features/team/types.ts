@@ -35,3 +35,19 @@ export interface Team {
   failedAt: string;
   refusedAt: string;
 }
+
+export interface AdminMatchingsResult {
+  matchings: Matching[];
+}
+
+export interface Matching {
+  matchingId: number;
+  maleTeamId: number;
+  maleTeamNickname: string;
+  maleTeamPhone: string;
+  femaleTeamId: number;
+  femaleTeamNickname: string;
+  femaleTeamPhone: string;
+  matchedAt: string;
+  chatIsCreated: boolean;
+}

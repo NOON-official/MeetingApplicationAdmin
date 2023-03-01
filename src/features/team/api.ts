@@ -1,7 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API_URL, STORAGE_KEY_ACCESS_TOKEN } from "@/config/constants";
 import browserStorage from "@/utils/browserStorage";
-import { AdminTeamsParams, AdminTeamsResult, TeamCountResult } from "./types";
+import {
+  AdminMatchingsResult,
+  AdminTeamsParams,
+  AdminTeamsResult,
+  TeamCountResult,
+} from "./types";
 
 const teamApi = createApi({
   reducerPath: `teamApi`,
@@ -30,6 +35,13 @@ const teamApi = createApi({
       }),
       providesTags: [`Teams`],
     }),
+    getAdminMatchings: builder.query<AdminMatchingsResult>({
+      query: (params) => ({
+        url: `admin/matchings`,
+        params,
+      }),
+      providesTags: [`Matchings`],
+    }),
     postMatchings: builder.mutation({
       query() {
         return {
@@ -55,6 +67,7 @@ export const {
   useGetTeamMembersCountOneWeekQuery,
   useGetAdminTeamCountQuery,
   useGetAdminTeamsQuery,
+  useGetAdminMatchingsQuery,
   usePostMatchingsMutation,
   useDeleteTeamIdMutation,
 } = teamApi;

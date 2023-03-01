@@ -3,9 +3,10 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Provider } from "react-redux";
 import store from "@/store";
-import JwtProvider from "@/providers/JwtProvider";
 import AuthProvider from "@/providers/AuthProvider";
+import JwtProvider from "@/providers/JwtProvider";
 import theme from "../styles/theme";
+
 import "antd/dist/reset.css";
 
 export default function App({ Component, pageProps }: AppProps) {

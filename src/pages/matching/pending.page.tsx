@@ -1,12 +1,12 @@
 import Section from "@/components/Section";
-import BaseLayout from "@/layouts/BaseLayout";
+import LayoutWithHeader from "@/layouts/LayoutWithHeader";
 
 const MatchingPendingPage = () => (
-  <BaseLayout>
+  <LayoutWithHeader>
     <Section center my="32px">
       <h2>수락/거절 대기자</h2>
     </Section>
-  </BaseLayout>
+  </LayoutWithHeader>
 );
 
 export default MatchingPendingPage;

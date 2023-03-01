@@ -4,6 +4,7 @@ import Head from "next/head";
 import { Provider } from "react-redux";
 import store from "@/store";
 import JwtProvider from "@/providers/JwtProvider";
+import AuthProvider from "@/providers/AuthProvider";
 import theme from "../styles/theme";
 import "antd/dist/reset.css";
 
@@ -18,7 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <Provider store={store}>
         <ConfigProvider theme={theme}>
-          <Component {...pageProps} />
+          <AuthProvider>
+            <Component {...pageProps} />
+          </AuthProvider>
         </ConfigProvider>
         <JwtProvider />
       </Provider>

@@ -4,7 +4,7 @@ import {
   useGetAdminTeamCountQuery,
   usePostMatchingsMutation,
 } from "@/features/team/api";
-import BaseLayout from "@/layouts/BaseLayout";
+import LayoutWithHeader from "@/layouts/LayoutWithHeader";
 import { Button, Col, Input, Row } from "antd";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
@@ -47,7 +47,7 @@ const IndexPage = () => {
   }, [deleteTeamId, deleteTeamIdInput]);
 
   return (
-    <BaseLayout>
+    <LayoutWithHeader>
       <Section center my="32px">
         <h2>관리자 페이지</h2>
         <StatTable>
@@ -136,7 +136,7 @@ const IndexPage = () => {
           </Button>
         </Input.Group>
       </Section>
-    </BaseLayout>
+    </LayoutWithHeader>
   );
 };
 

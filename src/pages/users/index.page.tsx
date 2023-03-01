@@ -1,12 +1,12 @@
 import Section from "@/components/Section";
-import BaseLayout from "@/layouts/BaseLayout";
+import LayoutWithHeader from "@/layouts/LayoutWithHeader";
 
 const UsersPage = () => (
-  <BaseLayout>
+  <LayoutWithHeader>
     <Section center my="32px">
       <h2>전체 회원</h2>
     </Section>
-  </BaseLayout>
+  </LayoutWithHeader>
 );
 
 export default UsersPage;

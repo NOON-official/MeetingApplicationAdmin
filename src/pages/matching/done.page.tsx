@@ -1,12 +1,12 @@
 import Section from "@/components/Section";
-import BaseLayout from "@/layouts/BaseLayout";
+import LayoutWithHeader from "@/layouts/LayoutWithHeader";
 
 const MatchingDonePage = () => (
-  <BaseLayout>
+  <LayoutWithHeader>
     <Section center my="32px">
       <h2>매칭 완료자</h2>
     </Section>
-  </BaseLayout>
+  </LayoutWithHeader>
 );
 
 export default MatchingDonePage;

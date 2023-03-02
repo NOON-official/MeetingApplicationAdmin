@@ -59,6 +59,24 @@ const teamApi = createApi({
       },
       invalidatesTags: [`Teams`],
     }),
+    putChat: builder.mutation<any, { matchingId: number }>({
+      query({ matchingId }) {
+        return {
+          url: `admin/matchings/${matchingId}/chat`,
+          method: `PUT`,
+        };
+      },
+      invalidatesTags: [`Matchings`],
+    }),
+    deleteMatchingId: builder.mutation<any, { matchingId: number }>({
+      query({ matchingId }) {
+        return {
+          url: `admin/matchings/${matchingId}`,
+          method: `DELETE`,
+        };
+      },
+      invalidatesTags: [`Matchings`],
+    }),
   }),
 });
 
@@ -69,6 +87,8 @@ export const {
   useGetAdminMatchingsQuery,
   usePostMatchingsMutation,
   useDeleteTeamIdMutation,
+  usePutChatMutation,
+  useDeleteMatchingIdMutation,
 } = teamApi;
 
 export default teamApi;

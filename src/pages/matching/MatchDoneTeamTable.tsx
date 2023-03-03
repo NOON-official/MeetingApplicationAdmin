@@ -1,6 +1,7 @@
 import {
   useGetAdminMatchingsQuery,
   usePutChatMutation,
+  useDeleteMatchingIdMutation,
 } from "@/features/team/api";
 import { Matching } from "@/features/team/types";
 import { Button, Space, Table } from "antd";
@@ -10,6 +11,7 @@ import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
 export default function MatchDoneTeamTable() {
+  const [deleteMatchingId] = useDeleteMatchingIdMutation();
   const [putChat] = usePutChatMutation();
   const { data: matchingData } = useGetAdminMatchingsQuery();
 
@@ -34,6 +36,23 @@ export default function MatchDoneTeamTable() {
       }
     },
     [putChat]
+  );
+
+  const onDeleteMatching = useCallback(
+    async (matching: Matching) => {
+      if (
+        window.confirm(`정말 ${matching.matchingId}번 매칭을 삭제하시겠습니까?`)
+      ) {
+        try {
+          await deleteMatchingId({ matchingId: matching.matchingId }).unwrap();
+          window.alert(`매칭 정보가 삭제되었습니다`);
+        } catch (e) {
+          console.error(e);
+          window.alert(`삭제중 오류가 발생했습니다`);
+        }
+      }
+    },
+    [deleteMatchingId]
   );
 
   const columns: ColumnsType<Matching> = [
@@ -84,7 +103,7 @@ export default function MatchDoneTeamTable() {
       width: 100,
     },
     {
-      title: `액션`,
+      title: `액션1`,
       key: `action`,
       width: 100,
       render: (_, record) => (
@@ -95,6 +114,16 @@ export default function MatchDoneTeamTable() {
           >
             채팅방 생성 완료
           </Button>
+        </Space>
+      ),
+    },
+    {
+      title: `액션2`,
+      key: `action`,
+      width: 50,
+      render: (_, record) => (
+        <Space size="middle">
+          <Button onClick={() => onDeleteMatching(record)}>삭제</Button>
         </Space>
       ),
     },

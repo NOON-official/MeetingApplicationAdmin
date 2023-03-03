@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { useCallback, useMemo, useState } from "react";
 
 const columns: ColumnsType<User> = [
+  { title: `User ID`, dataIndex: `userId`, width: 100 },
   {
     title: `이름`,
     dataIndex: `nickname`,

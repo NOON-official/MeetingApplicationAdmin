@@ -155,7 +155,13 @@ const UsersPage = () => {
         console.error(e);
       }
     }
-  }, [postCoupon, issueCouponUserId, issueCouponTypeId, issueCouponExpireDate]);
+  }, [
+    postCoupon,
+    issueCouponUserId,
+    issueCouponTypeId,
+    issueCouponExpireDate,
+    users,
+  ]);
 
   return (
     <LayoutWithHeader>

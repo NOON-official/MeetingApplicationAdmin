@@ -23,9 +23,25 @@ const userApi = createApi({
       }),
       providesTags: [`Users`],
     }),
+    postCoupon: builder.mutation<
+      any,
+      { userId: number; couponTypeId: number; expiresAt: string }
+    >({
+      query({ userId, couponTypeId, expiresAt }) {
+        return {
+          url: `admin/users/coupons/${userId}`,
+          method: `POST`,
+          body: {
+            couponTypeId,
+            expiresAt,
+          },
+        };
+      },
+      invalidatesTags: [`Users`],
+    }),
   }),
 });
 
-export const { useGetAdminUsersQuery } = userApi;
+export const { useGetAdminUsersQuery, usePostCouponMutation } = userApi;
 
 export default userApi;

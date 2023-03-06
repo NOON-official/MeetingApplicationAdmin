@@ -76,7 +76,7 @@ const UsersPage = () => {
   const [issueCouponUserId, setIssueCouponUserId] = useState<number>();
   const [issueCouponTypeId, setIssueCouponTypeId] = useState<number>(1);
   const [issueCouponExpireDate, setIssueCouponExpireDate] = useState(
-    dayjs().add(2, "month") || null
+    dayjs().add(2, `month`) || null
   );
   const [postCoupon] = usePostCouponMutation();
 
@@ -114,23 +114,23 @@ const UsersPage = () => {
     onClick: onClickCouponTypeMenu,
   };
 
-  const onChangeDate: DatePickerProps["onChange"] = (date, dateString) => {
+  const onChangeDate: DatePickerProps["onChange"] = (date) => {
     if (date) setIssueCouponExpireDate(date);
   };
 
   const onClickIssueCouponButton = useCallback(async () => {
     const userId = Number(issueCouponUserId);
     const couponTypeId = issueCouponTypeId;
-    const expiresAt = issueCouponExpireDate?.format("YYYY-MM-DD");
+    const expiresAt = issueCouponExpireDate?.format(`YYYY-MM-DD`);
 
     if (!userId || !couponTypeId || !expiresAt) {
-      window.alert("모든 정보를 입력해주세요");
+      window.alert(`모든 정보를 입력해주세요`);
       return;
     }
 
     const user = users.find((u) => u.userId === userId);
     if (!user) {
-      window.alert("존재하지 않는 유저입니다.");
+      window.alert(`존재하지 않는 유저입니다.`);
       return;
     }
 
@@ -176,7 +176,7 @@ const UsersPage = () => {
               <Space>
                 {issueCouponTypeId
                   ? getCouponType(issueCouponTypeId)?.name
-                  : "쿠폰 선택"}
+                  : `쿠폰 선택`}
                 <DownOutlined />
               </Space>
             </Button>

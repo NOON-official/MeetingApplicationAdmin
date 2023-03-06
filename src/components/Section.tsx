@@ -10,6 +10,7 @@ const Section = styled.section<{
   px?: string;
   py?: string;
   center?: boolean;
+  display?: string;
 }>`
   margin: ${({ my }) => my || `0px`} ${({ mx }) => mx || `20px`};
   padding: ${({ py }) => py || `0px`} ${({ px }) => px || `0px`};

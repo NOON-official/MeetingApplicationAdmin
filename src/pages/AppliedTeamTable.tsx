@@ -52,13 +52,19 @@ export default function AppliedTeamTable({
         if (a.appliedAt > b.appliedAt) return 1;
         return 0;
       },
+      defaultSortOrder: `descend`,
       width: 120,
     },
     {
       title: `매칭 카운트`,
       dataIndex: `matchingCount`,
       sorter: (a, b) => a.matchingCount - b.matchingCount,
-      width: 50,
+      width: 60,
+    },
+    {
+      title: `매칭 실패 이유`,
+      dataIndex: `lastFailReason`,
+      width: 70,
     },
     {
       title: `Team ID`,

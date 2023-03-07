@@ -34,6 +34,7 @@ export interface Team {
   matchedAt: string;
   failedAt: string;
   refusedAt: string;
+  lastFailReason: string;
 }
 
 export interface AdminMatchingsResult {

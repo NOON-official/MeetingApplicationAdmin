@@ -16,6 +16,7 @@ const columns: ColumnsType<Team> = [
       if (a.matchedAt > b.matchedAt) return 1;
       return 0;
     },
+    defaultSortOrder: `descend`,
     width: 120,
   },
   {

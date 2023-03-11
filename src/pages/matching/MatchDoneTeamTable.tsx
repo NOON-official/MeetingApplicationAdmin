@@ -70,6 +70,7 @@ export default function MatchDoneTeamTable() {
         if (a.matchedAt > b.matchedAt) return 1;
         return 0;
       },
+      defaultSortOrder: `descend`,
       width: 120,
     },
     {
@@ -135,7 +136,10 @@ export default function MatchDoneTeamTable() {
         rowKey="matchingId"
         dataSource={matchings}
         columns={columns}
-        pagination={false}
+        pagination={{
+          position: [`bottomCenter`],
+          defaultPageSize: 10,
+        }}
       />
     </Container>
   );

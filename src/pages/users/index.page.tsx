@@ -227,7 +227,7 @@ const UsersPage = () => {
             columns={columns}
             pagination={{
               position: [`bottomCenter`],
-              defaultPageSize: 10,
+              defaultPageSize: 50,
             }}
           />
         </TableContainer>

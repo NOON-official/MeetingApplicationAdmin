@@ -138,7 +138,7 @@ export default function MatchDoneTeamTable() {
         columns={columns}
         pagination={{
           position: [`bottomCenter`],
-          defaultPageSize: 10,
+          defaultPageSize: 50,
         }}
       />
     </Container>

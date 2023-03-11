@@ -71,6 +71,7 @@ export default function MatchRefusedTeamTable() {
         if (a.refusedAt > b.refusedAt) return 1;
         return 0;
       },
+      defaultSortOrder: `descend`,
       width: 120,
     },
     {

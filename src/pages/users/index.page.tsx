@@ -16,7 +16,11 @@ import { CouponTypes } from "../../config/constants";
 import getCouponType from "../../utils/getCouponType";
 
 const columns: ColumnsType<User> = [
-  { title: `User ID`, dataIndex: `userId`, width: 100 },
+  {
+    title: `User ID`,
+    dataIndex: `userId`,
+    width: 100,
+  },
   {
     title: `이름`,
     dataIndex: `nickname`,
@@ -41,6 +45,7 @@ const columns: ColumnsType<User> = [
       if (a.createdAt > b.createdAt) return 1;
       return 0;
     },
+    defaultSortOrder: `descend`,
     width: 120,
   },
   {
@@ -220,7 +225,10 @@ const UsersPage = () => {
             rowKey="userId"
             dataSource={users}
             columns={columns}
-            pagination={false}
+            pagination={{
+              position: [`bottomCenter`],
+              defaultPageSize: 10,
+            }}
           />
         </TableContainer>
       </Section>

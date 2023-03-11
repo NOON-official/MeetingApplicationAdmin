@@ -71,6 +71,7 @@ export default function MatchFailedTeamTable() {
         if (a.failedAt > b.failedAt) return 1;
         return 0;
       },
+      defaultSortOrder: `descend`,
       width: 120,
     },
     {

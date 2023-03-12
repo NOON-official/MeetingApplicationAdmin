@@ -190,7 +190,6 @@ const RightBarProgress = styled.div<{ progress: number }>`
 `;
 
 const NumberText = styled.p`
-  width: 10px;
   padding: 0 10px;
   font-weight: 400;
   font-size: 15px;

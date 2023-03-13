@@ -157,7 +157,6 @@ const UsersPage = () => {
         window.alert(`쿠폰이 발급되었습니다`);
       } catch (e) {
         window.alert(`쿠폰 발급중 오류가 발생하였습니다`);
-        console.error(e);
       }
     }
   }, [

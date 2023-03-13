@@ -32,7 +32,6 @@ const IndexPage = () => {
         window.alert(`매칭 완료되었습니다`);
       } catch (e) {
         window.alert(`매칭중 오류가 발생하였습니다`);
-        console.error(e);
       }
     }
   }, [postMatchings]);
@@ -67,7 +66,7 @@ const IndexPage = () => {
         window.alert(`매칭이 완료되었습니다`);
       } catch (e: any) {
         if (e.data.message) window.alert(e.data.message);
-        else window.alert("매칭중 오류가 발생하였습니다");
+        else window.alert(`매칭중 오류가 발생하였습니다`);
       }
     }
   }, [postMatching, selectedMaleTeamId, selectedFemaleTeamId]);

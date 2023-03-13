@@ -53,7 +53,6 @@ export default function MatchFailedTeamTable() {
           await deleteTeamId({ teamId: team.teamId }).unwrap();
           window.alert(`팀 신청정보가 삭제되었습니다`);
         } catch (e) {
-          console.error(e);
           window.alert(`삭제중 오류가 발생했습니다`);
         }
       }

@@ -30,7 +30,6 @@ export default function MatchDoneTeamTable() {
           await putChat({ matchingId: matching.matchingId }).unwrap();
           window.alert(`채팅방 생성 여부가 저장되었습니다`);
         } catch (e) {
-          console.error(e);
           window.alert(`저장중 오류가 발생했습니다`);
         }
       }
@@ -47,7 +46,6 @@ export default function MatchDoneTeamTable() {
           await deleteMatchingId({ matchingId: matching.matchingId }).unwrap();
           window.alert(`매칭 정보가 삭제되었습니다`);
         } catch (e) {
-          console.error(e);
           window.alert(`삭제중 오류가 발생했습니다`);
         }
       }

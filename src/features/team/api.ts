@@ -77,6 +77,18 @@ const teamApi = createApi({
       },
       invalidatesTags: [`Matchings`],
     }),
+    postMatching: builder.mutation<
+      any,
+      { maleTeamId: number; femaleTeamId: number }
+    >({
+      query({ maleTeamId, femaleTeamId }) {
+        return {
+          url: `admin/matchings/${maleTeamId}/${femaleTeamId}`,
+          method: `POST`,
+        };
+      },
+      invalidatesTags: [`Matchings`],
+    }),
   }),
 });
 
@@ -89,6 +101,7 @@ export const {
   useDeleteTeamIdMutation,
   usePutChatMutation,
   useDeleteMatchingIdMutation,
+  usePostMatchingMutation,
 } = teamApi;
 
 export default teamApi;

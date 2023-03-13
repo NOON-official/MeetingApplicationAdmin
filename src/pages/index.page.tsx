@@ -2,22 +2,28 @@ import Section from "@/components/Section";
 import {
   useGetAdminTeamCountQuery,
   usePostMatchingsMutation,
+  usePostMatchingMutation,
 } from "@/features/team/api";
 import LayoutWithHeader from "@/layouts/LayoutWithHeader";
-import { Button, Col, Row } from "antd";
-import { useCallback } from "react";
+import { Button, Col, Row, Input } from "antd";
+import { ManOutlined, WomanOutlined } from "@ant-design/icons";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 import AppliedTeamTable from "./AppliedTeamTable";
 
 const IndexPage = () => {
   const { data: teamData } = useGetAdminTeamCountQuery();
   const [postMatchings] = usePostMatchingsMutation();
+  const [postMatching] = usePostMatchingMutation();
 
   const teamsPerRound = teamData?.teamsPerRound || 0;
   const twoman = teamData?.[`2vs2`].male || 0;
   const twogirl = teamData?.[`2vs2`].female || 0;
   const threeman = teamData?.[`3vs3`].male || 0;
   const threegirl = teamData?.[`3vs3`].female || 0;
+
+  const [selectedMaleTeamId, setSelectedMaleTeamId] = useState<number>();
+  const [selectedFemaleTeamId, setSelectedFemaleTeamId] = useState<number>();
 
   const doMatching = useCallback(async () => {
     if (window.confirm(`정말 매칭을 적용하시겠습니까?`)) {
@@ -26,10 +32,44 @@ const IndexPage = () => {
         window.alert(`매칭 완료되었습니다`);
       } catch (e) {
         window.alert(`매칭중 오류가 발생하였습니다`);
-        console.error(e);
       }
     }
   }, [postMatchings]);
+
+  const onChangeSelectedMaleTeamId = useCallback((event: any) => {
+    setSelectedMaleTeamId(event.target.value);
+  }, []);
+
+  const onChangeSelectedFemaleTeamId = useCallback((event: any) => {
+    setSelectedFemaleTeamId(event.target.value);
+  }, []);
+
+  const onClickMatchingButton = useCallback(async () => {
+    const maleTeamId = Number(selectedMaleTeamId);
+    const femaleTeamId = Number(selectedFemaleTeamId);
+
+    if (!maleTeamId || !femaleTeamId) {
+      window.alert(`모든 정보를 입력해주세요`);
+      return;
+    }
+
+    if (
+      window.confirm(
+        `남자팀 ${maleTeamId}번과 여자팀 ${femaleTeamId}번을 매칭하시겠습니까?`
+      )
+    ) {
+      try {
+        await postMatching({
+          maleTeamId,
+          femaleTeamId,
+        }).unwrap();
+        window.alert(`매칭이 완료되었습니다`);
+      } catch (e: any) {
+        if (e.data.message) window.alert(e.data.message);
+        else window.alert(`매칭중 오류가 발생하였습니다`);
+      }
+    }
+  }, [postMatching, selectedMaleTeamId, selectedFemaleTeamId]);
 
   return (
     <LayoutWithHeader>
@@ -105,6 +145,31 @@ const IndexPage = () => {
       <Section center py="32px">
         <Button size="large" type="primary" onClick={doMatching}>
           매칭 적용
+        </Button>
+      </Section>
+      <Section center py="32px">
+        <InputContainer>
+          <Input
+            placeholder="남자팀 ID"
+            allowClear
+            prefix={<ManOutlined />}
+            size="large"
+            value={selectedMaleTeamId}
+            onChange={onChangeSelectedMaleTeamId}
+          />
+        </InputContainer>
+        <InputContainer>
+          <Input
+            placeholder="여자팀 ID"
+            allowClear
+            prefix={<WomanOutlined />}
+            size="large"
+            value={selectedFemaleTeamId}
+            onChange={onChangeSelectedFemaleTeamId}
+          />
+        </InputContainer>
+        <Button size="large" type="primary" onClick={onClickMatchingButton}>
+          상호 매칭
         </Button>
       </Section>
     </LayoutWithHeader>
@@ -190,7 +255,6 @@ const RightBarProgress = styled.div<{ progress: number }>`
 `;
 
 const NumberText = styled.p`
-  width: 10px;
   padding: 0 10px;
   font-weight: 400;
   font-size: 15px;
@@ -201,6 +265,13 @@ const TableTitle = styled.h2`
   font-weight: bold;
   text-align: center;
   margin: 20px 0;
+`;
+
+const InputContainer = styled.div`
+  display: inline-flex;
+  width: 130px;
+  margin: 0 auto;
+  margin-right: 15px;
 `;
 
 export default IndexPage;

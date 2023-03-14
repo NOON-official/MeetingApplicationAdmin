@@ -2,13 +2,14 @@ import Section from "@/components/Section";
 import {
   useGetAdminUsersQuery,
   usePostCouponMutation,
+  useDeleteTicketMutation,
 } from "@/features/user/api";
 import { User } from "@/features/user/types";
 import LayoutWithHeader from "@/layouts/LayoutWithHeader";
 import { ColumnsType } from "antd/es/table";
 import { Input, Table, Button, Dropdown, Space, DatePicker } from "antd";
 import type { MenuProps, DatePickerProps } from "antd";
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { DownOutlined, UserOutlined, TagOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import { useCallback, useMemo, useState } from "react";
@@ -83,7 +84,10 @@ const UsersPage = () => {
   const [issueCouponExpireDate, setIssueCouponExpireDate] = useState(
     dayjs().add(2, `month`) || null
   );
+  const [deleteTicketUserId, setDeleteTicketUserId] = useState<number>();
+  const [deleteTicketCount, setDeleteTicketCount] = useState<number>();
   const [postCoupon] = usePostCouponMutation();
+  const [deleteTicket] = useDeleteTicketMutation();
 
   const users = useMemo(() => {
     if (!data) {
@@ -167,10 +171,78 @@ const UsersPage = () => {
     users,
   ]);
 
+  const onChangeDeleteTicketUserId = useCallback((event: any) => {
+    setDeleteTicketUserId(event.target.value);
+  }, []);
+
+  const onChangeDeleteTicketCount = useCallback((event: any) => {
+    setDeleteTicketCount(event.target.value);
+  }, []);
+
+  const onClickDeleteTicketButton = useCallback(async () => {
+    const userId = Number(deleteTicketUserId);
+    const ticketCount = Number(deleteTicketCount);
+
+    if (!userId || !ticketCount) {
+      window.alert(`모든 정보를 입력해주세요`);
+      return;
+    }
+
+    const user = users.find((u) => u.userId === userId);
+    if (!user) {
+      window.alert(`존재하지 않는 유저입니다.`);
+      return;
+    }
+
+    if (
+      window.confirm(
+        `정말 ${userId}번 ${
+          users.find((u) => u.userId === userId)?.nickname
+        } 유저의 이용권 ${ticketCount}장을 삭제하시겠습니까?`
+      )
+    ) {
+      try {
+        await deleteTicket({
+          userId,
+          ticketCount,
+        }).unwrap();
+        window.alert(`이용권 ${ticketCount}장이 삭제되었습니다`);
+      } catch (e: any) {
+        if (e.data.message) window.alert(e.data.message);
+        else window.alert(`이용권 삭제중 오류가 발생하였습니다`);
+      }
+    }
+  }, [deleteTicket, deleteTicketUserId, deleteTicketCount, users]);
+
   return (
     <LayoutWithHeader>
       <Section center my="32px" display="flex">
-        <IssueCouponInputContainer>
+        <UserIdInputContainer>
+          <Input
+            placeholder="유저 ID"
+            allowClear
+            prefix={<UserOutlined />}
+            size="large"
+            value={deleteTicketUserId}
+            onChange={onChangeDeleteTicketUserId}
+          />
+        </UserIdInputContainer>
+        <TicketCountInputContainer>
+          <Input
+            placeholder="이용권 개수"
+            allowClear
+            prefix={<TagOutlined />}
+            size="large"
+            value={deleteTicketCount}
+            onChange={onChangeDeleteTicketCount}
+          />
+        </TicketCountInputContainer>
+        <Button size="large" type="primary" onClick={onClickDeleteTicketButton}>
+          이용권 삭제
+        </Button>
+      </Section>
+      <Section center my="32px" display="flex">
+        <UserIdInputContainer>
           <Input
             placeholder="유저 ID"
             allowClear
@@ -179,7 +251,7 @@ const UsersPage = () => {
             value={issueCouponUserId}
             onChange={onChangeUserId}
           />
-        </IssueCouponInputContainer>
+        </UserIdInputContainer>
         <IssueCouponDropdownContainer>
           <Dropdown menu={menuProps}>
             <Button size="large">
@@ -245,7 +317,7 @@ const InputContainer = styled.div`
   margin: 0 auto;
 `;
 
-const IssueCouponInputContainer = styled.div`
+const UserIdInputContainer = styled.div`
   display: inline-flex;
   width: 115px;
   margin: 0 auto;
@@ -260,6 +332,13 @@ const IssueCouponDropdownContainer = styled.div`
 const IssueCouponDateContainer = styled.div`
   display: inline-flex;
   width: 130px;
+  margin: 0 auto;
+  margin-right: 15px;
+`;
+
+const TicketCountInputContainer = styled.div`
+  display: inline-flex;
+  width: 146px;
   margin: 0 auto;
   margin-right: 15px;
 `;

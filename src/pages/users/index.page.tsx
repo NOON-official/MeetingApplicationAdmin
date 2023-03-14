@@ -198,7 +198,7 @@ const UsersPage = () => {
       window.confirm(
         `정말 ${userId}번 ${
           users.find((u) => u.userId === userId)?.nickname
-        } 유저의 이용권 ${ticketCount}장을 삭제하시겠습니까?`
+        } 유저의 이용권 ${ticketCount}장을 삭제하시겠습니까??`
       )
     ) {
       try {

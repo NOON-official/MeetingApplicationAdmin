@@ -39,7 +39,10 @@ const userApi = createApi({
       },
       invalidatesTags: [`Users`],
     }),
-    deleteTicket: builder.mutation<any, { userId: number, ticketCount: number }>({
+    deleteTicket: builder.mutation<
+      any,
+      { userId: number; ticketCount: number }
+    >({
       query({ userId, ticketCount }) {
         return {
           url: `admin/users/${userId}/tickets/${ticketCount}`,
@@ -51,6 +54,10 @@ const userApi = createApi({
   }),
 });
 
-export const { useGetAdminUsersQuery, usePostCouponMutation, useDeleteTicketMutation } = userApi;
+export const {
+  useGetAdminUsersQuery,
+  usePostCouponMutation,
+  useDeleteTicketMutation,
+} = userApi;
 
 export default userApi;

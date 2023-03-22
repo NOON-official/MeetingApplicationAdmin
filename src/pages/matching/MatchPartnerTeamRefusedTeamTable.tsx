@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
-export default function MatchRefusedTeamTable() {
+export default function MatchPartnerTeamRefusedTeamTable() {
   const [deleteTeamId] = useDeleteTeamIdMutation();
   const { data: maleTwoTeamData } = useGetAdminTeamsQuery({
     membercount: 2,

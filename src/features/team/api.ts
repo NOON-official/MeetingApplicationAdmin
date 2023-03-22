@@ -6,6 +6,7 @@ import {
   AdminTeamsParams,
   AdminTeamsResult,
   TeamCountResult,
+  AdminOurteamRefusedTeamsResult,
 } from "./types";
 
 const teamApi = createApi({
@@ -40,6 +41,15 @@ const teamApi = createApi({
         url: `admin/matchings`,
       }),
       providesTags: [`Matchings`],
+    }),
+    getAdminOurteamRefusedTeams: builder.query<
+      AdminOurteamRefusedTeamsResult,
+      void
+    >({
+      query: () => ({
+        url: `admin/teams/ourteam-refused`,
+      }),
+      providesTags: [`Teams`],
     }),
     postMatchings: builder.mutation({
       query() {
@@ -89,6 +99,15 @@ const teamApi = createApi({
       },
       invalidatesTags: [`Matchings`],
     }),
+    deleteOurteamRefusedTeamId: builder.mutation<any, { teamId: number }>({
+      query({ teamId }) {
+        return {
+          url: `admin/teams/ourteam-refused/${teamId}`,
+          method: `DELETE`,
+        };
+      },
+      invalidatesTags: [`Teams`],
+    }),
   }),
 });
 
@@ -97,11 +116,13 @@ export const {
   useGetAdminTeamCountQuery,
   useGetAdminTeamsQuery,
   useGetAdminMatchingsQuery,
+  useGetAdminOurteamRefusedTeamsQuery,
   usePostMatchingsMutation,
   useDeleteTeamIdMutation,
   usePutChatMutation,
   useDeleteMatchingIdMutation,
   usePostMatchingMutation,
+  useDeleteOurteamRefusedTeamIdMutation,
 } = teamApi;
 
 export default teamApi;

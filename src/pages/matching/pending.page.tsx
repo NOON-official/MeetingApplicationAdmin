@@ -3,7 +3,8 @@ import LayoutWithHeader from "@/layouts/LayoutWithHeader";
 import styled from "styled-components";
 import MatchedTeamTable from "./MatchedTeamTable";
 import MatchFailedTeamTable from "./MatchFailedTeamTable";
-import MatchRefusedTeamTable from "./MatchRefusedTeamTable";
+import MatchPartnerTeamRefusedTeamTable from "./MatchPartnerTeamRefusedTeamTable";
+import MatchOurteamRefusedTeamTable from "./MatchOurteamRefusedTeamTable";
 
 export default function MatchingPendingPage() {
   return (
@@ -23,7 +24,13 @@ export default function MatchingPendingPage() {
       <Section center py="64px">
         <Title>거절 당한 회원</Title>
         <TableContainer>
-          <MatchRefusedTeamTable />
+          <MatchPartnerTeamRefusedTeamTable />
+        </TableContainer>
+      </Section>
+      <Section center py="64px">
+        <Title>매칭 거절 회원</Title>
+        <TableContainer>
+          <MatchOurteamRefusedTeamTable />
         </TableContainer>
       </Section>
     </LayoutWithHeader>

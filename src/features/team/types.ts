@@ -52,3 +52,16 @@ export interface Matching {
   matchedAt: string;
   chatIsCreated: boolean;
 }
+
+export interface AdminOurteamRefusedTeamsResult {
+  teams: OurteamRefusedTeam[];
+}
+
+export interface OurteamRefusedTeam {
+  teamId: number;
+  nickname: string;
+  gender: string;
+  phone: string;
+  refusedAt: string;
+  matchingRefuseReason: string;
+}

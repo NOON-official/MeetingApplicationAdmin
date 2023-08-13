@@ -1,15 +1,14 @@
-import { RequestParams } from "../types";
+import { RequestParams } from '../types';
 
 export interface TeamCountResult {
   teamsPerRound: number;
-  "2vs2": { male: number; female: number };
-  "3vs3": { male: number; female: number };
+  '2vs2': { male: number; female: number };
+  '3vs3': { male: number; female: number };
+  '4vs4': { male: number; female: number };
 }
 
 export interface AdminTeamsParams extends RequestParams {
-  status: "APPLIED" | "MATCHED" | "FAILED" | "PARTNER_TEAM_REFUSED";
-  membercount: 2 | 3;
-  gender: "male" | "female";
+  gender: 'male' | 'female';
 }
 
 export interface AdminTeamsResult {
@@ -18,23 +17,20 @@ export interface AdminTeamsResult {
 
 export interface Team {
   teamId: number;
-  matchingCount: number;
   nickname: string;
+  kakaoId: string;
+  teamName: string;
   intro: string;
   memberCount: number;
+  memberCounts: number[];
   phone: string;
-  averageAge: number;
+  age: number;
   prefAge: number[];
   areas: number[];
-  universities: number[];
-  prefSameUniversity: boolean;
+  universities?: number[];
   drink: number;
-  partnerTeamId: number;
-  appliedAt: string;
-  matchedAt: string;
-  failedAt: string;
-  refusedAt: string;
-  lastFailReason: string;
+  appliedAt: Date;
+  userId: number;
 }
 
 export interface AdminMatchingsResult {

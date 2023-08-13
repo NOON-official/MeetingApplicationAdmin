@@ -1,30 +1,21 @@
-import {
-  useDeleteTeamIdMutation,
-  useGetAdminTeamsQuery,
-} from "@/features/team/api";
-import { Team } from "@/features/team/types";
-import getArea from "@/utils/getArea";
-import getUniversity from "@/utils/getUniversity";
-import { Button, Space, Table } from "antd";
-import { ColumnsType } from "antd/es/table";
-import dayjs from "dayjs";
-import { useCallback } from "react";
-import styled from "styled-components";
+import { useDeleteTeamIdMutation, useGetAdminTeamsQuery } from '@/features/team/api';
+import { Team } from '@/features/team/types';
+import getArea from '@/utils/getArea';
+import getUniversity from '@/utils/getUniversity';
+import { Button, Space, Table } from 'antd';
+import { ColumnsType } from 'antd/es/table';
+import dayjs from 'dayjs';
+import { useCallback } from 'react';
+import styled from 'styled-components';
 
 interface AppliedTeamTableProps {
-  memberCount: 2 | 3;
-  gender: "male" | "female";
+  gender: 'male' | 'female';
 }
 
-export default function AppliedTeamTable({
-  memberCount,
-  gender,
-}: AppliedTeamTableProps) {
+export default function TeamTable({ gender }: AppliedTeamTableProps) {
   const [deleteTeamId] = useDeleteTeamIdMutation();
   const { data } = useGetAdminTeamsQuery({
-    membercount: memberCount,
     gender,
-    status: `APPLIED`,
   });
 
   const onDeleteTeam = useCallback(
@@ -55,17 +46,6 @@ export default function AppliedTeamTable({
       width: 120,
     },
     {
-      title: `매칭 카운트`,
-      dataIndex: `matchingCount`,
-      sorter: (a, b) => a.matchingCount - b.matchingCount,
-      width: 60,
-    },
-    {
-      title: `매칭 실패 이유`,
-      dataIndex: `lastFailReason`,
-      width: 70,
-    },
-    {
       title: `Team ID`,
       dataIndex: `teamId`,
       sorter: (a, b) => a.teamId - b.teamId,
@@ -74,6 +54,11 @@ export default function AppliedTeamTable({
     {
       title: `이름`,
       dataIndex: `nickname`,
+      width: 70,
+    },
+    {
+      title: `우리팀 이름`,
+      dataIndex: `teamName`,
       width: 70,
     },
     {
@@ -93,8 +78,8 @@ export default function AppliedTeamTable({
     },
     {
       title: `나이`,
-      dataIndex: `averageAge`,
-      sorter: (a, b) => a.averageAge - b.averageAge,
+      dataIndex: `age`,
+      sorter: (a, b) => a.age - b.age,
       width: 50,
     },
     {
@@ -106,26 +91,29 @@ export default function AppliedTeamTable({
     {
       title: `지역`,
       dataIndex: `areas`,
-      render: (value) =>
-        value.map((id: number) => getArea(id)?.name).join(`, `),
+      render: (value) => value.map((id: number) => getArea(id)?.name).join(`, `),
       width: 70,
     },
     {
       title: `대학교`,
       dataIndex: `universities`,
-      render: (value) =>
-        value.map((id: number) => getUniversity(id)?.name).join(`,\n`),
+      render: (value) => value.map((id: number) => getUniversity(id)?.name).join(`,\n`),
       width: 150,
     },
     {
-      title: `동대학선호`,
-      dataIndex: `prefSameUniversity`,
-      render: (value) => (value ? `Y` : `N`),
+      title: `카톡 아이디`,
+      dataIndex: `kakaoId`,
       width: 70,
     },
     {
       title: `주량레벨`,
       dataIndex: `drink`,
+      width: 70,
+    },
+    {
+      title: `추가 허용`,
+      dataIndex: `memberCounts`,
+      render: (value) => value.join(`, `),
       width: 70,
     },
     {
@@ -142,12 +130,7 @@ export default function AppliedTeamTable({
 
   return (
     <Container>
-      <Table
-        rowKey="teamId"
-        dataSource={data?.teams}
-        columns={columns}
-        pagination={false}
-      />
+      <Table rowKey="teamId" dataSource={data?.teams} columns={columns} pagination={false} />
     </Container>
   );
 }

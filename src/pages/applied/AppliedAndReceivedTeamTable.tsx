@@ -1,10 +1,10 @@
-import { useGetAdminTeamsQuery } from "@/features/team/api";
-import { Team } from "@/features/team/types";
-import { Table } from "antd";
-import { ColumnsType } from "antd/es/table";
-import dayjs from "dayjs";
-import { useMemo } from "react";
-import styled from "styled-components";
+import { useGetAdminTeamsQuery } from '@/features/team/api';
+import { Team } from '@/features/team/types';
+import { Table } from 'antd';
+import { ColumnsType } from 'antd/es/table';
+import dayjs from 'dayjs';
+import { useMemo } from 'react';
+import styled from 'styled-components';
 
 const columns: ColumnsType<Team> = [
   {
@@ -41,7 +41,7 @@ const columns: ColumnsType<Team> = [
   },
 ];
 
-export default function MatchedTeamTable() {
+export default function AppliedAndReceivedTeamTable() {
   const { data: maleTwoTeamData } = useGetAdminTeamsQuery({
     membercount: 2,
     gender: `male`,
@@ -70,21 +70,11 @@ export default function MatchedTeamTable() {
       ...(maleThreeTeamData ? maleThreeTeamData.teams : []),
       ...(femaleThreeTeamData ? femaleThreeTeamData.teams : []),
     ];
-  }, [
-    femaleThreeTeamData,
-    femaleTwoTeamData,
-    maleThreeTeamData,
-    maleTwoTeamData,
-  ]);
+  }, [femaleThreeTeamData, femaleTwoTeamData, maleThreeTeamData, maleTwoTeamData]);
 
   return (
     <Container>
-      <Table
-        rowKey="teamId"
-        dataSource={teams}
-        columns={columns}
-        pagination={false}
-      />
+      <Table rowKey="teamId" dataSource={teams} columns={columns} pagination={false} />
     </Container>
   );
 }

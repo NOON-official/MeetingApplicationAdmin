@@ -1,17 +1,17 @@
-import { logout } from "@/features/user/asyncActions";
-import useAppDispatch from "@/hooks/useAppDispatch";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useCallback } from "react";
-import styled from "styled-components";
-import LogoSVG from "../assets/svgs/Logo.svg";
+import { logout } from '@/features/user/asyncActions';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useCallback } from 'react';
+import styled from 'styled-components';
+import LogoSVG from '../assets/svgs/Logo.svg';
 
 export default function Header() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const isHome = router.pathname === `/`;
-  const isMatchingPending = router.pathname === `/matching/pending`;
+  const isAppliedReceived = router.pathname === `/applied/received`;
   const isMatchinDone = router.pathname === `/matching/done`;
   const isUsers = router.pathname === `/users`;
 
@@ -35,11 +35,11 @@ export default function Header() {
         <Menu isActive={isHome}>
           <StyledLink href="/">신청자</StyledLink>
         </Menu>
-        <Menu isActive={isMatchingPending}>
-          <StyledLink href="/matching/pending">수락/거절 대기자</StyledLink>
+        <Menu isActive={isAppliedReceived}>
+          <StyledLink href="/applied/received">신청한/신청받은 팀</StyledLink>
         </Menu>
         <Menu isActive={isMatchinDone}>
-          <StyledLink href="/matching/done">매칭 완료자</StyledLink>
+          <StyledLink href="/matching/done">매칭 완료 팀</StyledLink>
         </Menu>
         <Menu isActive={isUsers}>
           <StyledLink href="/users">전체 회원</StyledLink>

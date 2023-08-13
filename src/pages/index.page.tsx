@@ -1,9 +1,5 @@
 import Section from '@/components/Section';
-import {
-  useGetAdminTeamCountQuery,
-  usePostMatchingsMutation,
-  usePostMatchingMutation,
-} from '@/features/team/api';
+import { useGetAdminTeamCountQuery } from '@/features/team/api';
 import LayoutWithHeader from '@/layouts/LayoutWithHeader';
 import { Button, Col, Row, Input } from 'antd';
 import { ManOutlined, WomanOutlined } from '@ant-design/icons';

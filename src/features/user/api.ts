@@ -1,7 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API_URL, STORAGE_KEY_ACCESS_TOKEN } from "@/config/constants";
 import browserStorage from "@/utils/browserStorage";
-import { AdminUsersResult } from "./types";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { AdminUserStudentCard, AdminUsersResult } from "./types";
 
 const userApi = createApi({
   reducerPath: `userApi`,
@@ -22,6 +22,11 @@ const userApi = createApi({
         url: `admin/users`,
       }),
       providesTags: [`Users`],
+    }),
+    getAdminUserStudentCard: builder.query<AdminUserStudentCard, void>({
+      query: () => ({
+        url: `admin/users/student-card`,
+      }),
     }),
     postCoupon: builder.mutation<
       any,
@@ -56,6 +61,7 @@ const userApi = createApi({
 
 export const {
   useGetAdminUsersQuery,
+  useGetAdminUserStudentCardQuery,
   usePostCouponMutation,
   useDeleteTicketMutation,
 } = userApi;

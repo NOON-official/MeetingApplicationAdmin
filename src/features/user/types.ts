@@ -14,3 +14,16 @@ export interface User {
 export interface AdminUsersResult {
   users: User[];
 }
+
+export interface UserStudentCard {
+  userId: number;
+  nickname: string;
+  birth: number;
+  university: string;
+  gender: string;
+  studentCardUrl: string;
+}
+
+export interface AdminUserStudentCard {
+  users: UserStudentCard[];
+}

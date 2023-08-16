@@ -1,19 +1,19 @@
-import { useGetAdminTeamsQuery } from '@/features/team/api';
-import { Team } from '@/features/team/types';
+import { useGetAdminMatchingsAppliedQuery, useGetAdminTeamsQuery } from '@/features/team/api';
+import { AppliedAndRecieved, Team } from '@/features/team/types';
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
-const columns: ColumnsType<Team> = [
+const columns: ColumnsType<AppliedAndRecieved> = [
   {
-    title: `매칭 시간`,
-    dataIndex: `matchedAt`,
+    title: `신청 시간`,
+    dataIndex: `appliedAt`,
     render: (value) => dayjs(value).format(`YYYY-MM-DD HH:mm`),
     sorter: (a, b) => {
-      if (a.matchedAt < b.matchedAt) return -1;
-      if (a.matchedAt > b.matchedAt) return 1;
+      if (a.appliedAt < b.appliedAt) return -1;
+      if (a.appliedAt > b.appliedAt) return 1;
       return 0;
     },
     defaultSortOrder: `descend`,
@@ -22,11 +22,6 @@ const columns: ColumnsType<Team> = [
   {
     title: `Team ID`,
     dataIndex: `teamId`,
-    width: 50,
-  },
-  {
-    title: `상대 Team`,
-    dataIndex: `partnerTeamId`,
     width: 50,
   },
   {
@@ -39,39 +34,52 @@ const columns: ColumnsType<Team> = [
     dataIndex: `phone`,
     width: 50,
   },
+  {
+    title: `Team ID`,
+    dataIndex: `partnerTeamId`,
+    width: 50,
+  },
+  {
+    title: `이름`,
+    dataIndex: `partnerTeamOwnernickname`,
+    width: 50,
+  },
+  {
+    title: `폰번호`,
+    dataIndex: `partnerTeamOwnerphone`,
+    width: 50,
+  },
 ];
 
 export default function AppliedAndReceivedTeamTable() {
-  const { data: maleTwoTeamData } = useGetAdminTeamsQuery({
-    membercount: 2,
-    gender: `male`,
-    status: `MATCHED`,
-  });
-  const { data: femaleTwoTeamData } = useGetAdminTeamsQuery({
-    membercount: 2,
-    gender: `female`,
-    status: `MATCHED`,
-  });
-  const { data: maleThreeTeamData } = useGetAdminTeamsQuery({
-    membercount: 3,
-    gender: `male`,
-    status: `MATCHED`,
-  });
-  const { data: femaleThreeTeamData } = useGetAdminTeamsQuery({
-    membercount: 3,
-    gender: `female`,
-    status: `MATCHED`,
-  });
+  const { data } = useGetAdminMatchingsAppliedQuery();
+  // const { data: maleTwoTeamData } = useGetAdminTeamsQuery({
+  //   membercount: 2,
+  //   gender: `male`,
+  //   status: `MATCHED`,
+  // });
+  // const { data: femaleTwoTeamData } = useGetAdminTeamsQuery({
+  //   membercount: 2,
+  //   gender: `female`,
+  //   status: `MATCHED`,
+  // });
+  // const { data: maleThreeTeamData } = useGetAdminTeamsQuery({
+  //   membercount: 3,
+  //   gender: `male`,
+  //   status: `MATCHED`,
+  // });
+  // const { data: femaleThreeTeamData } = useGetAdminTeamsQuery({
+  //   membercount: 3,
+  //   gender: `female`,
+  //   status: `MATCHED`,
+  // });
 
+  console.log(data);
   const teams = useMemo(() => {
-    return [
-      ...(maleTwoTeamData ? maleTwoTeamData.teams : []),
-      ...(femaleTwoTeamData ? femaleTwoTeamData.teams : []),
-      ...(maleThreeTeamData ? maleThreeTeamData.teams : []),
-      ...(femaleThreeTeamData ? femaleThreeTeamData.teams : []),
-    ];
-  }, [femaleThreeTeamData, femaleTwoTeamData, maleThreeTeamData, maleTwoTeamData]);
+    return data ? data.appliedandreceiveds : [];
+  }, [data]);
 
+  console.log(teams);
   return (
     <Container>
       <Table rowKey="teamId" dataSource={teams} columns={columns} pagination={false} />

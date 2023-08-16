@@ -33,6 +33,21 @@ export interface Team {
   userId: number;
 }
 
+export interface AdminAppliedAndRecievedResult {
+  appliedandreceiveds: AppliedAndRecieved[];
+}
+
+export interface AppliedAndRecieved {
+  matchingId: number;
+  teamId: number;
+  nickname: string;
+  phone: string;
+  partnerTeamId: number;
+  partnerTeamOwnernickname: string;
+  partnerTeamOwnerphone: string;
+  appliedAt: Date;
+}
+
 export interface AdminMatchingsResult {
   matchings: Matching[];
 }

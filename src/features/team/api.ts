@@ -1,13 +1,14 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { API_URL, STORAGE_KEY_ACCESS_TOKEN } from "@/config/constants";
-import browserStorage from "@/utils/browserStorage";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { API_URL, STORAGE_KEY_ACCESS_TOKEN } from '@/config/constants';
+import browserStorage from '@/utils/browserStorage';
 import {
   AdminMatchingsResult,
   AdminTeamsParams,
   AdminTeamsResult,
   TeamCountResult,
   AdminOurteamRefusedTeamsResult,
-} from "./types";
+  AdminAppliedAndRecievedResult,
+} from './types';
 
 const teamApi = createApi({
   reducerPath: `teamApi`,
@@ -42,10 +43,13 @@ const teamApi = createApi({
       }),
       providesTags: [`Matchings`],
     }),
-    getAdminOurteamRefusedTeams: builder.query<
-      AdminOurteamRefusedTeamsResult,
-      void
-    >({
+    getAdminMatchingsApplied: builder.query<AdminAppliedAndRecievedResult, void>({
+      query: () => ({
+        url: `admin/matchings/applied`,
+      }),
+      providesTags: [`Matchings`],
+    }),
+    getAdminOurteamRefusedTeams: builder.query<AdminOurteamRefusedTeamsResult, void>({
       query: () => ({
         url: `admin/teams/ourteam-refused`,
       }),
@@ -87,10 +91,7 @@ const teamApi = createApi({
       },
       invalidatesTags: [`Matchings`],
     }),
-    postMatching: builder.mutation<
-      any,
-      { maleTeamId: number; femaleTeamId: number }
-    >({
+    postMatching: builder.mutation<any, { maleTeamId: number; femaleTeamId: number }>({
       query({ maleTeamId, femaleTeamId }) {
         return {
           url: `admin/matchings/${maleTeamId}/${femaleTeamId}`,
@@ -116,6 +117,7 @@ export const {
   useGetAdminTeamCountQuery,
   useGetAdminTeamsQuery,
   useGetAdminMatchingsQuery,
+  useGetAdminMatchingsAppliedQuery,
   useGetAdminOurteamRefusedTeamsQuery,
   usePostMatchingsMutation,
   useDeleteTeamIdMutation,

@@ -1,7 +1,7 @@
-import { API_URL, STORAGE_KEY_ACCESS_TOKEN } from "@/config/constants";
-import browserStorage from "@/utils/browserStorage";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AdminUserStudentCard, AdminUsersResult } from "./types";
+import { API_URL, STORAGE_KEY_ACCESS_TOKEN } from '@/config/constants';
+import browserStorage from '@/utils/browserStorage';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { AdminUserStudentCard, AdminUsersResult } from './types';
 
 const userApi = createApi({
   reducerPath: `userApi`,

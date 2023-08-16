@@ -49,6 +49,12 @@ const teamApi = createApi({
       }),
       providesTags: [`Matchings`],
     }),
+    getAdminMatchingsSucceeded: builder.query<AdminMatchingsResult, void>({
+      query: () => ({
+        url: `admin/matchings/succeeded`,
+      }),
+      providesTags: [`Matchings`],
+    }),
     getAdminOurteamRefusedTeams: builder.query<AdminOurteamRefusedTeamsResult, void>({
       query: () => ({
         url: `admin/teams/ourteam-refused`,
@@ -118,6 +124,7 @@ export const {
   useGetAdminTeamsQuery,
   useGetAdminMatchingsQuery,
   useGetAdminMatchingsAppliedQuery,
+  useGetAdminMatchingsSucceededQuery,
   useGetAdminOurteamRefusedTeamsQuery,
   usePostMatchingsMutation,
   useDeleteTeamIdMutation,

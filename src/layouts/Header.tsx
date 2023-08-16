@@ -14,6 +14,7 @@ export default function Header() {
   const isMatchingPending = router.pathname === `/matching/pending`;
   const isMatchinDone = router.pathname === `/matching/done`;
   const isUsers = router.pathname === `/users`;
+  const isStudentCard = router.pathname === `/studentcard`;
 
   const handleLogout = useCallback(() => {
     dispatch(logout());
@@ -43,6 +44,9 @@ export default function Header() {
         </Menu>
         <Menu isActive={isUsers}>
           <StyledLink href="/users">전체 회원</StyledLink>
+        </Menu>
+        <Menu isActive={isStudentCard}>
+          <StyledLink href="/studentcard">학생증 인증</StyledLink>
         </Menu>
       </MenuContainer>
     </Container>

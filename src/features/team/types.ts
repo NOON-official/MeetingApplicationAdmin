@@ -54,14 +54,13 @@ export interface AdminMatchingsResult {
 
 export interface Matching {
   matchingId: number;
-  maleTeamId: number;
-  maleTeamNickname: string;
-  maleTeamPhone: string;
-  femaleTeamId: number;
-  femaleTeamNickname: string;
-  femaleTeamPhone: string;
-  matchedAt: string;
-  chatIsCreated: boolean;
+  teamId: number;
+  nickname: string;
+  phone: string;
+  partnerTeamId: number;
+  partnerTeamOwnernickname: string;
+  partnerTeamOwnerphone: string;
+  matchedAt: Date;
 }
 
 export interface AdminOurteamRefusedTeamsResult {

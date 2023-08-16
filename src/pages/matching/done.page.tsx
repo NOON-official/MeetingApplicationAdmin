@@ -1,13 +1,13 @@
-import Section from "@/components/Section";
-import LayoutWithHeader from "@/layouts/LayoutWithHeader";
-import styled from "styled-components";
-import MatchDoneTeamTable from "./MatchDoneTeamTable";
+import Section from '@/components/Section';
+import LayoutWithHeader from '@/layouts/LayoutWithHeader';
+import styled from 'styled-components';
+import MatchDoneTeamTable from './MatchDoneTeamTable';
 
 export default function MatchingDonePage() {
   return (
     <LayoutWithHeader>
       <Section center py="64px">
-        <Title>매칭 완료자</Title>
+        <Title>매칭 완료팀</Title>
         <TableContainer>
           <MatchDoneTeamTable />
         </TableContainer>

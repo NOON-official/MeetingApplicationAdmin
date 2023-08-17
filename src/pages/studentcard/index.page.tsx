@@ -1,11 +1,41 @@
 import Section from '@/components/Section';
-import { useGetAdminUserStudentCardQuery } from '@/features/user/api';
+import {
+  useGetAdminUserStudentCardQuery,
+  usePutAdminUsersUserIdStudentCardVerifyMutation,
+  usePutAdminUsersUserIdVerifyMutation,
+} from '@/features/user/api';
 import LayoutWithHeader from '@/layouts/LayoutWithHeader';
 import { Button } from 'antd';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 
 const StudentcardPage = () => {
   const { data: users } = useGetAdminUserStudentCardQuery();
+  const [verifyUser] = usePutAdminUsersUserIdStudentCardVerifyMutation();
+  const [declineUser] = usePutAdminUsersUserIdVerifyMutation();
+
+  const onVerifyUser = useCallback(
+    async (userId: number) => {
+      try {
+        await verifyUser({ userId }).unwrap();
+        window.alert(`팀 신청정보가 삭제되었습니다`);
+      } catch (e) {
+        window.alert(`삭제중 오류가 발생했습니다`);
+      }
+    },
+    [verifyUser],
+  );
+  const onDeclineUser = useCallback(
+    async (userId: number) => {
+      try {
+        await declineUser({ userId }).unwrap();
+        window.alert(`팀 신청정보가 삭제되었습니다`);
+      } catch (e) {
+        window.alert(`삭제중 오류가 발생했습니다`);
+      }
+    },
+    [declineUser],
+  );
 
   return (
     <LayoutWithHeader>
@@ -23,8 +53,8 @@ const StudentcardPage = () => {
               </DetailContainer>
             </ImgContainer>
             <ButtonBox>
-              <Btn>인증 완료</Btn>
-              <Btn>인증 실패</Btn>
+              <Btn onClick={() => onVerifyUser(user.userId)}>인증 완료</Btn>
+              <Btn onClick={() => onDeclineUser(user.userId)}>인증 실패</Btn>
             </ButtonBox>
           </Section>
         );

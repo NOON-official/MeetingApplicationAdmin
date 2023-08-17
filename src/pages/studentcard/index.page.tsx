@@ -18,9 +18,9 @@ const StudentcardPage = () => {
     async (userId: number) => {
       try {
         await verifyUser({ userId }).unwrap();
-        window.alert(`팀 신청정보가 삭제되었습니다`);
+        window.alert(`학생증 인증이 완료되었습니다`);
       } catch (e) {
-        window.alert(`삭제중 오류가 발생했습니다`);
+        window.alert(`학생증 인증 중 오류가 발생했습니다`);
       }
     },
     [verifyUser],
@@ -29,9 +29,9 @@ const StudentcardPage = () => {
     async (userId: number) => {
       try {
         await declineUser({ userId }).unwrap();
-        window.alert(`팀 신청정보가 삭제되었습니다`);
+        window.alert(`학생증 인증이 거절되었습니다`);
       } catch (e) {
-        window.alert(`삭제중 오류가 발생했습니다`);
+        window.alert(`거절중 오류가 발생했습니다`);
       }
     },
     [declineUser],

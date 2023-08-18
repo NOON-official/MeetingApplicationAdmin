@@ -27,6 +27,7 @@ const userApi = createApi({
       query: () => ({
         url: `admin/users/student-card`,
       }),
+      providesTags: [`Users`],
     }),
     postCoupon: builder.mutation<
       any,

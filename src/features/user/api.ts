@@ -68,7 +68,10 @@ const userApi = createApi({
       },
       invalidatesTags: [`Users`],
     }),
-    putAdminUsersUserIdVerify: builder.mutation<any, { userId: number }>({
+    putAdminUsersUserIdStudentCardDecline: builder.mutation<
+      any,
+      { userId: number }
+    >({
       query({ userId }) {
         return {
           url: `admin/users/${userId}/student-card/decline`,
@@ -86,7 +89,7 @@ export const {
   usePostCouponMutation,
   useDeleteTicketMutation,
   usePutAdminUsersUserIdStudentCardVerifyMutation,
-  usePutAdminUsersUserIdVerifyMutation,
+  usePutAdminUsersUserIdStudentCardDeclineMutation,
 } = userApi;
 
 export default userApi;

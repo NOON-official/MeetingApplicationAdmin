@@ -2,7 +2,7 @@ import Section from '@/components/Section';
 import {
   useGetAdminUserStudentCardQuery,
   usePutAdminUsersUserIdStudentCardVerifyMutation,
-  usePutAdminUsersUserIdVerifyMutation,
+  usePutAdminUsersUserIdStudentCardDeclineMutation,
 } from '@/features/user/api';
 import LayoutWithHeader from '@/layouts/LayoutWithHeader';
 import { Button } from 'antd';
@@ -12,7 +12,7 @@ import styled from 'styled-components';
 const StudentcardPage = () => {
   const { data: users } = useGetAdminUserStudentCardQuery();
   const [verifyUser] = usePutAdminUsersUserIdStudentCardVerifyMutation();
-  const [declineUser] = usePutAdminUsersUserIdVerifyMutation();
+  const [declineUser] = usePutAdminUsersUserIdStudentCardDeclineMutation();
 
   const onVerifyUser = useCallback(
     async (userId: number) => {

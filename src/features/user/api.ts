@@ -56,6 +56,27 @@ const userApi = createApi({
       },
       invalidatesTags: [`Users`],
     }),
+    putAdminUsersUserIdStudentCardVerify: builder.mutation<
+      any,
+      { userId: number }
+    >({
+      query({ userId }) {
+        return {
+          url: `admin/users/${userId}/student-card/verify`,
+          method: `PUT`,
+        };
+      },
+      invalidatesTags: [`Users`],
+    }),
+    putAdminUsersUserIdVerify: builder.mutation<any, { userId: number }>({
+      query({ userId }) {
+        return {
+          url: `admin/users/${userId}/student-card/decline`,
+          method: `PUT`,
+        };
+      },
+      invalidatesTags: [`Users`],
+    }),
   }),
 });
 
@@ -64,6 +85,8 @@ export const {
   useGetAdminUserStudentCardQuery,
   usePostCouponMutation,
   useDeleteTicketMutation,
+  usePutAdminUsersUserIdStudentCardVerifyMutation,
+  usePutAdminUsersUserIdVerifyMutation,
 } = userApi;
 
 export default userApi;

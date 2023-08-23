@@ -8,6 +8,7 @@ import LayoutWithHeader from '@/layouts/LayoutWithHeader';
 import { Button } from 'antd';
 import { useCallback } from 'react';
 import styled from 'styled-components';
+import Universities from './University';
 
 const StudentcardPage = () => {
   const { data: users } = useGetAdminUserStudentCardQuery();
@@ -48,7 +49,9 @@ const StudentcardPage = () => {
               <DetailContainer>
                 <Info>{`이름 : ${user.nickname}`}</Info>
                 <Info>{`성별 : ${user.gender}`}</Info>
-                <Info>{`학교 : ${user.university}`}</Info>
+                <Info>{`학교 : ${
+                  Universities[Number(user.university) - 1].name
+                }`}</Info>
                 <Info>{`나이 : ${user.birth}`}</Info>
               </DetailContainer>
             </ImgContainer>

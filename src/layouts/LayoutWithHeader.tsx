@@ -1,5 +1,5 @@
-import dynamic from "next/dynamic";
-import React, { ReactNode } from "react";
+import dynamic from 'next/dynamic';
+import React, { ReactNode } from 'react';
 
 type Props = {
   children?: ReactNode;

@@ -1,4 +1,7 @@
-import { useGetAdminMatchingsAppliedQuery, useGetAdminTeamsQuery } from '@/features/team/api';
+import {
+  useGetAdminMatchingsAppliedQuery,
+  useGetAdminTeamsQuery,
+} from '@/features/team/api';
 import { AppliedAndRecieved, Team } from '@/features/team/types';
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
@@ -82,7 +85,12 @@ export default function AppliedAndReceivedTeamTable() {
   console.log(teams);
   return (
     <Container>
-      <Table rowKey="teamId" dataSource={teams} columns={columns} pagination={false} />
+      <Table
+        rowKey="teamId"
+        dataSource={teams}
+        columns={columns}
+        pagination={false}
+      />
     </Container>
   );
 }

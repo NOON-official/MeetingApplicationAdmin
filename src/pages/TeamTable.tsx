@@ -1,4 +1,7 @@
-import { useDeleteTeamIdMutation, useGetAdminTeamsQuery } from '@/features/team/api';
+import {
+  useDeleteTeamIdMutation,
+  useGetAdminTeamsQuery,
+} from '@/features/team/api';
 import { Team } from '@/features/team/types';
 import getArea from '@/utils/getArea';
 import getUniversity from '@/utils/getUniversity';
@@ -29,7 +32,7 @@ export default function TeamTable({ gender }: AppliedTeamTableProps) {
         }
       }
     },
-    [deleteTeamId]
+    [deleteTeamId],
   );
 
   const columns: ColumnsType<Team> = [
@@ -91,13 +94,15 @@ export default function TeamTable({ gender }: AppliedTeamTableProps) {
     {
       title: `지역`,
       dataIndex: `areas`,
-      render: (value) => value.map((id: number) => getArea(id)?.name).join(`, `),
+      render: (value) =>
+        value.map((id: number) => getArea(id)?.name).join(`, `),
       width: 70,
     },
     {
       title: `대학교`,
       dataIndex: `universities`,
-      render: (value) => value.map((id: number) => getUniversity(id)?.name).join(`,\n`),
+      render: (value) =>
+        value.map((id: number) => getUniversity(id)?.name).join(`,\n`),
       width: 150,
     },
     {
@@ -130,7 +135,12 @@ export default function TeamTable({ gender }: AppliedTeamTableProps) {
 
   return (
     <Container>
-      <Table rowKey="teamId" dataSource={data?.teams} columns={columns} pagination={false} />
+      <Table
+        rowKey="teamId"
+        dataSource={data?.teams}
+        columns={columns}
+        pagination={false}
+      />
     </Container>
   );
 }

@@ -1,5 +1,5 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import backend from "@/utils/backend";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import backend from '@/utils/backend';
 
 export const logout = createAsyncThunk(`user/logout`, async () => {
   const response = await backend.get(`/auth/signout`);
@@ -15,5 +15,5 @@ export const refreshJwtToken = createAsyncThunk(
     });
 
     return response.data;
-  }
+  },
 );

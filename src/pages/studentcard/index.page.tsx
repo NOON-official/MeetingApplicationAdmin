@@ -50,7 +50,7 @@ const StudentcardPage = () => {
                 <Info>{`이름 : ${user.nickname}`}</Info>
                 <Info>{`성별 : ${user.gender}`}</Info>
                 <Info>{`학교 : ${
-                  Universities[Number(user.university) - 1].name
+                  Universities[Number(user.university) - 1]?.name
                 }`}</Info>
                 <Info>{`나이 : ${user.birth}`}</Info>
               </DetailContainer>

@@ -1,7 +1,7 @@
-import { useEffect, ReactNode } from "react";
-import { useRouter } from "next/router";
-import useAppSelector from "@/hooks/useAppSelector";
-import dynamic from "next/dynamic";
+import { useEffect, ReactNode } from 'react';
+import { useRouter } from 'next/router';
+import useAppSelector from '@/hooks/useAppSelector';
+import dynamic from 'next/dynamic';
 
 type Props = {
   children?: ReactNode;

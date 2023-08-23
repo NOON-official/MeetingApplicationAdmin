@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import jwtDecode from "jwt-decode";
-import { STORAGE_KEY_ACCESS_TOKEN } from "@/config/constants";
-import browserStorage from "@/utils/browserStorage";
-import { logout, refreshJwtToken } from "./asyncActions";
+import { createSlice } from '@reduxjs/toolkit';
+import jwtDecode from 'jwt-decode';
+import { STORAGE_KEY_ACCESS_TOKEN } from '@/config/constants';
+import browserStorage from '@/utils/browserStorage';
+import { logout, refreshJwtToken } from './asyncActions';
 
 interface UserState {
   accessToken: string | null;

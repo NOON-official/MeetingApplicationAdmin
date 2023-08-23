@@ -1,4 +1,4 @@
-import { ThemeConfig } from "antd/es/config-provider";
+import { ThemeConfig } from 'antd/es/config-provider';
 
 const theme: ThemeConfig = {
   token: {

@@ -1,20 +1,20 @@
-import Section from "@/components/Section";
+import Section from '@/components/Section';
 import {
   useGetAdminUsersQuery,
   usePostCouponMutation,
   useDeleteTicketMutation,
-} from "@/features/user/api";
-import { User } from "@/features/user/types";
-import LayoutWithHeader from "@/layouts/LayoutWithHeader";
-import { ColumnsType } from "antd/es/table";
-import { Input, Table, Button, Dropdown, Space, DatePicker } from "antd";
-import type { MenuProps, DatePickerProps } from "antd";
-import { DownOutlined, UserOutlined, TagOutlined } from "@ant-design/icons";
-import dayjs from "dayjs";
-import styled from "styled-components";
-import { useCallback, useMemo, useState } from "react";
-import { CouponTypes } from "../../config/constants";
-import getCouponType from "../../utils/getCouponType";
+} from '@/features/user/api';
+import { User } from '@/features/user/types';
+import LayoutWithHeader from '@/layouts/LayoutWithHeader';
+import { ColumnsType } from 'antd/es/table';
+import { Input, Table, Button, Dropdown, Space, DatePicker } from 'antd';
+import type { MenuProps, DatePickerProps } from 'antd';
+import { DownOutlined, UserOutlined, TagOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
+import styled from 'styled-components';
+import { useCallback, useMemo, useState } from 'react';
+import { CouponTypes } from '../../config/constants';
+import getCouponType from '../../utils/getCouponType';
 
 const columns: ColumnsType<User> = [
   {
@@ -82,7 +82,7 @@ const UsersPage = () => {
   const [issueCouponUserId, setIssueCouponUserId] = useState<number>();
   const [issueCouponTypeId, setIssueCouponTypeId] = useState<number>(1);
   const [issueCouponExpireDate, setIssueCouponExpireDate] = useState(
-    dayjs().add(2, `month`) || null
+    dayjs().add(2, `month`) || null,
   );
   const [deleteTicketUserId, setDeleteTicketUserId] = useState<number>();
   const [deleteTicketCount, setDeleteTicketCount] = useState<number>();
@@ -110,11 +110,11 @@ const UsersPage = () => {
     setIssueCouponUserId(event.target.value);
   }, []);
 
-  const onClickCouponTypeMenu: MenuProps["onClick"] = (event) => {
+  const onClickCouponTypeMenu: MenuProps['onClick'] = (event) => {
     setIssueCouponTypeId(Number(event.key));
   };
 
-  const items: MenuProps["items"] = CouponTypes.map((c) => {
+  const items: MenuProps['items'] = CouponTypes.map((c) => {
     return { label: c.name, key: c.id };
   });
 
@@ -123,7 +123,7 @@ const UsersPage = () => {
     onClick: onClickCouponTypeMenu,
   };
 
-  const onChangeDate: DatePickerProps["onChange"] = (date) => {
+  const onChangeDate: DatePickerProps['onChange'] = (date) => {
     if (date) setIssueCouponExpireDate(date);
   };
 
@@ -149,7 +149,7 @@ const UsersPage = () => {
           users.find((u) => u.userId === userId)?.nickname
         } 유저에게 [${
           CouponTypes.find((c) => c.id === couponTypeId)?.name
-        }]을 발급하시겠습니까? (만료 일자: ${expiresAt})`
+        }]을 발급하시겠습니까? (만료 일자: ${expiresAt})`,
       )
     ) {
       try {
@@ -198,7 +198,7 @@ const UsersPage = () => {
       window.confirm(
         `정말 ${userId}번 ${
           users.find((u) => u.userId === userId)?.nickname
-        } 유저의 이용권 ${ticketCount}장을 삭제하시겠습니까?`
+        } 유저의 이용권 ${ticketCount}장을 삭제하시겠습니까?`,
       )
     ) {
       try {

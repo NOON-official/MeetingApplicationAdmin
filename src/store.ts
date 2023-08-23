@@ -1,7 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
-import teamApi from "./features/team/api";
-import user from "./features/user";
-import userApi from "./features/user/api";
+import { configureStore } from '@reduxjs/toolkit';
+import teamApi from './features/team/api';
+import user from './features/user';
+import userApi from './features/user/api';
 
 const store = configureStore({
   reducer: {

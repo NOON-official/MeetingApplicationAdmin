@@ -43,7 +43,10 @@ const teamApi = createApi({
       }),
       providesTags: [`Matchings`],
     }),
-    getAdminMatchingsApplied: builder.query<AdminAppliedAndRecievedResult, void>({
+    getAdminMatchingsApplied: builder.query<
+      AdminAppliedAndRecievedResult,
+      void
+    >({
       query: () => ({
         url: `admin/matchings/applied`,
       }),
@@ -55,7 +58,10 @@ const teamApi = createApi({
       }),
       providesTags: [`Matchings`],
     }),
-    getAdminOurteamRefusedTeams: builder.query<AdminOurteamRefusedTeamsResult, void>({
+    getAdminOurteamRefusedTeams: builder.query<
+      AdminOurteamRefusedTeamsResult,
+      void
+    >({
       query: () => ({
         url: `admin/teams/ourteam-refused`,
       }),
@@ -97,7 +103,10 @@ const teamApi = createApi({
       },
       invalidatesTags: [`Matchings`],
     }),
-    postMatching: builder.mutation<any, { maleTeamId: number; femaleTeamId: number }>({
+    postMatching: builder.mutation<
+      any,
+      { maleTeamId: number; femaleTeamId: number }
+    >({
       query({ maleTeamId, femaleTeamId }) {
         return {
           url: `admin/matchings/${maleTeamId}/${femaleTeamId}`,

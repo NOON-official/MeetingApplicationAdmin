@@ -118,7 +118,7 @@ export default function TeamTable({ gender }: AppliedTeamTableProps) {
     {
       title: `추가 허용`,
       dataIndex: `memberCounts`,
-      render: (value) => (value === null ? '' : value.join(`, `)),
+      render: (value) => (value === null ? ` ` : value.join(`, `)),
       width: 70,
     },
     {

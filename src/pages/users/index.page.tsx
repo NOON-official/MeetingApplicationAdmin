@@ -3,6 +3,7 @@ import {
   useGetAdminUsersQuery,
   usePostCouponMutation,
   useDeleteTicketMutation,
+  usePostAdminUsersTingMutation,
 } from '@/features/user/api';
 import { User } from '@/features/user/types';
 import LayoutWithHeader from '@/layouts/LayoutWithHeader';
@@ -88,6 +89,9 @@ const UsersPage = () => {
   const [deleteTicketCount, setDeleteTicketCount] = useState<number>();
   const [postCoupon] = usePostCouponMutation();
   const [deleteTicket] = useDeleteTicketMutation();
+  const [userTing] = usePostAdminUsersTingMutation();
+
+  // const { data: ting } = usePostAdminUsersTingQuery();
 
   const users = useMemo(() => {
     if (!data) {
@@ -214,8 +218,21 @@ const UsersPage = () => {
     }
   }, [deleteTicket, deleteTicketUserId, deleteTicketCount, users]);
 
+  const onClickUserTing = async () => {
+    try {
+      await userTing().unwrap();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <LayoutWithHeader>
+      <Section center my="32px" display="flex">
+        <Button size="large" type="primary" onClick={onClickUserTing}>
+          기존 유저티켓을 팅으로 바꾸기!!
+        </Button>
+      </Section>
       <Section center my="32px" display="flex">
         <UserIdInputContainer>
           <Input

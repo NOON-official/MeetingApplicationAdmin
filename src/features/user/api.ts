@@ -81,6 +81,15 @@ const userApi = createApi({
       },
       invalidatesTags: [`Users`],
     }),
+    postAdminUsersTing: builder.mutation<void, void>({
+      query() {
+        return {
+          url: `admin/users/ting`,
+          method: `POST`,
+        };
+      },
+      invalidatesTags: [`Users`],
+    }),
   }),
 });
 
@@ -91,6 +100,7 @@ export const {
   useDeleteTicketMutation,
   usePutAdminUsersUserIdStudentCardVerifyMutation,
   usePutAdminUsersUserIdStudentCardDeclineMutation,
+  usePostAdminUsersTingMutation,
 } = userApi;
 
 export default userApi;

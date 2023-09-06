@@ -221,10 +221,10 @@ const UsersPage = () => {
   const onClickUserTing = async () => {
     try {
       await userTing().unwrap();
-      alert('전환 성공!');
+      alert(`전환 성공!`);
     } catch (err) {
       console.log(err);
-      alert('전환 실패');
+      alert(`전환 실패!`);
     }
   };
 

@@ -1,11 +1,11 @@
-import { useEffect, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import useInterval from "@/hooks/useInterval";
-import { refreshJwtToken } from "@/features/user/asyncActions";
-import { STORAGE_KEY_ACCESS_TOKEN } from "@/config/constants";
-import { AppDispatch } from "@/store";
-import browserStorage from "@/utils/browserStorage";
-import dynamic from "next/dynamic";
+import { useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import useInterval from '@/hooks/useInterval';
+import { refreshJwtToken } from '@/features/user/asyncActions';
+import { STORAGE_KEY_ACCESS_TOKEN } from '@/config/constants';
+import { AppDispatch } from '@/store';
+import browserStorage from '@/utils/browserStorage';
+import dynamic from 'next/dynamic';
 
 function StaticJwtProvider() {
   const dispatch = useDispatch<AppDispatch>();

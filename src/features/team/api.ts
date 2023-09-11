@@ -1,13 +1,14 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { API_URL, STORAGE_KEY_ACCESS_TOKEN } from "@/config/constants";
-import browserStorage from "@/utils/browserStorage";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { API_URL, STORAGE_KEY_ACCESS_TOKEN } from '@/config/constants';
+import browserStorage from '@/utils/browserStorage';
 import {
   AdminMatchingsResult,
   AdminTeamsParams,
   AdminTeamsResult,
   TeamCountResult,
   AdminOurteamRefusedTeamsResult,
-} from "./types";
+  AdminAppliedAndRecievedResult,
+} from './types';
 
 const teamApi = createApi({
   reducerPath: `teamApi`,
@@ -39,6 +40,21 @@ const teamApi = createApi({
     getAdminMatchings: builder.query<AdminMatchingsResult, void>({
       query: () => ({
         url: `admin/matchings`,
+      }),
+      providesTags: [`Matchings`],
+    }),
+    getAdminMatchingsApplied: builder.query<
+      AdminAppliedAndRecievedResult,
+      void
+    >({
+      query: () => ({
+        url: `admin/matchings/applied`,
+      }),
+      providesTags: [`Matchings`],
+    }),
+    getAdminMatchingsSucceeded: builder.query<AdminMatchingsResult, void>({
+      query: () => ({
+        url: `admin/matchings/succeeded`,
       }),
       providesTags: [`Matchings`],
     }),
@@ -116,6 +132,8 @@ export const {
   useGetAdminTeamCountQuery,
   useGetAdminTeamsQuery,
   useGetAdminMatchingsQuery,
+  useGetAdminMatchingsAppliedQuery,
+  useGetAdminMatchingsSucceededQuery,
   useGetAdminOurteamRefusedTeamsQuery,
   usePostMatchingsMutation,
   useDeleteTeamIdMutation,

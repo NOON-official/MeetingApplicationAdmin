@@ -1,15 +1,15 @@
 import Section from '@/components/Section';
 import LayoutWithHeader from '@/layouts/LayoutWithHeader';
 import styled from 'styled-components';
-import MatchDoneTeamTable from './MatchDoneTeamTable';
+import AppliedAndReceivedTeamTable from './AppliedAndReceivedTeamTable';
 
-export default function MatchingDonePage() {
+export default function MatchingPendingPage() {
   return (
     <LayoutWithHeader>
       <Section center py="64px">
-        <Title>매칭 완료팀</Title>
+        <Title>신청한/신청받은 팀</Title>
         <TableContainer>
-          <MatchDoneTeamTable />
+          <AppliedAndReceivedTeamTable />
         </TableContainer>
       </Section>
     </LayoutWithHeader>

@@ -1,8 +1,5 @@
-import {
-  useGetAdminMatchingsAppliedQuery,
-  useGetAdminTeamsQuery,
-} from '@/features/team/api';
-import { AppliedAndRecieved, Team } from '@/features/team/types';
+import { useGetAdminMatchingsAppliedQuery } from '@/features/team/api';
+import { AppliedAndRecieved } from '@/features/team/types';
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
@@ -77,12 +74,10 @@ export default function AppliedAndReceivedTeamTable() {
   //   status: `MATCHED`,
   // });
 
-  console.log(data);
   const teams = useMemo(() => {
     return data ? data.appliedandreceiveds : [];
   }, [data]);
 
-  console.log(teams);
   return (
     <Container>
       <Table

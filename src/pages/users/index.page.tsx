@@ -8,14 +8,12 @@ import {
 import { User } from '@/features/user/types';
 import LayoutWithHeader from '@/layouts/LayoutWithHeader';
 import { ColumnsType } from 'antd/es/table';
-import { Input, Table, Button, Dropdown, Space, DatePicker } from 'antd';
+import { Input, Table } from 'antd';
 import type { MenuProps, DatePickerProps } from 'antd';
-import { DownOutlined, UserOutlined, TagOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { useCallback, useMemo, useState } from 'react';
 import { CouponTypes } from '../../config/constants';
-import getCouponType from '../../utils/getCouponType';
 
 const columns: ColumnsType<User> = [
   {
@@ -26,11 +24,6 @@ const columns: ColumnsType<User> = [
   {
     title: `이름`,
     dataIndex: `nickname`,
-    width: 100,
-  },
-  {
-    title: `상태`,
-    dataIndex: `matchingStatus`,
     width: 100,
   },
   {
@@ -56,8 +49,8 @@ const columns: ColumnsType<User> = [
     width: 100,
   },
   {
-    title: `이용권 개수`,
-    dataIndex: `ticketCount`,
+    title: `팅 개수`,
+    dataIndex: `tingCount`,
     width: 100,
   },
   {
@@ -90,8 +83,6 @@ const UsersPage = () => {
   const [postCoupon] = usePostCouponMutation();
   const [deleteTicket] = useDeleteTicketMutation();
   const [userTing] = usePostAdminUsersTingMutation();
-
-  // const { data: ting } = usePostAdminUsersTingQuery();
 
   const users = useMemo(() => {
     if (!data) {
@@ -228,12 +219,12 @@ const UsersPage = () => {
 
   return (
     <LayoutWithHeader>
-      <Section center my="32px" display="flex">
+      {/* <Section center my="32px" display="flex">
         <Button size="large" type="primary" onClick={onClickUserTing}>
           기존 유저티켓을 팅으로 바꾸기!!
         </Button>
-      </Section>
-      <Section center my="32px" display="flex">
+      </Section> */}
+      {/* <Section center my="32px" display="flex">
         <UserIdInputContainer>
           <Input
             placeholder="유저 ID"
@@ -257,8 +248,8 @@ const UsersPage = () => {
         <Button size="large" type="primary" onClick={onClickDeleteTicketButton}>
           이용권 삭제
         </Button>
-      </Section>
-      <Section center my="32px" display="flex">
+      </Section> */}
+      {/* <Section center my="32px" display="flex">
         <UserIdInputContainer>
           <Input
             placeholder="유저 ID"
@@ -295,7 +286,7 @@ const UsersPage = () => {
         <Button size="large" type="primary" onClick={onClickIssueCouponButton}>
           쿠폰 발급
         </Button>
-      </Section>
+      </Section> */}
       <Section center my="32px">
         <InputContainer>
           <Input.Search
@@ -306,6 +297,12 @@ const UsersPage = () => {
             onSearch={onSearch}
           />
         </InputContainer>
+      </Section>
+      <Section center my="32px">
+        <span style={{ lineHeight: `25px` }}>
+          * 가입은 했으나 추가 정보 (대학교) 입력이 완료되지 않으면
+          <br /> 팅 개수가 -1로 보입니다. (무료 팅 없음)
+        </span>
       </Section>
       <Section center my="32px">
         <TableContainer>

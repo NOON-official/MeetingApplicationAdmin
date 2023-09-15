@@ -51,6 +51,7 @@ const columns: ColumnsType<User> = [
   {
     title: `팅 개수`,
     dataIndex: `tingCount`,
+    sorter: (a, b) => a.tingCount - b.tingCount,
     width: 100,
   },
   {

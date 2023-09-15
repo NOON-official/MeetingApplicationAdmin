@@ -5,7 +5,7 @@ export interface User {
   phone?: string;
   createdAt: string;
   referralId?: string;
-  ticketCount?: number;
+  tingCount: number;
   discount50CouponCount?: number;
   freeCouponCount?: number;
   userInvitaionCount?: number;

@@ -36,27 +36,25 @@ const columns: ColumnsType<User> = [
     title: `신청 여부`,
     dataIndex: `isVerified`,
     render: (value) => {
-      if (value) {
+      if (value === true) {
         return `O`;
       }
-      if (!value) {
-        return ``;
-      }
-      return ``;
+      return `X`;
     },
+
     width: 30,
   },
   {
     title: `승인 여부`,
     dataIndex: `approval`,
     render: (value) => {
-      if (value === null) {
-        return ``;
-      }
-      if (value) {
+      if (value === true) {
         return `O`;
       }
-      return `X`;
+      if (value === false) {
+        return `X`;
+      }
+      return ``;
     },
     width: 30,
   },
@@ -93,6 +91,7 @@ const StudentcardPage = () => {
 
   // 전체 회원 학생증 인증 여부 목록
   const { data } = useGetAdminUsersQuery();
+  console.log(data);
   const [keyword, setKeyword] = useState(``);
   const onSearch = useCallback((value: string) => {
     setKeyword(value);

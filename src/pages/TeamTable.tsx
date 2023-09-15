@@ -34,7 +34,7 @@ export default function TeamTable({ gender }: AppliedTeamTableProps) {
     },
     [deleteTeamId],
   );
-
+  console.log(data);
   const columns: ColumnsType<Team> = [
     {
       title: `시간`,

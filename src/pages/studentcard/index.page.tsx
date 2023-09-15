@@ -3,15 +3,68 @@ import {
   useGetAdminUserStudentCardQuery,
   usePutAdminUsersUserIdStudentCardVerifyMutation,
   usePutAdminUsersUserIdStudentCardDeclineMutation,
+  useGetAdminUsersQuery,
 } from '@/features/user/api';
 import LayoutWithHeader from '@/layouts/LayoutWithHeader';
-import { Button } from 'antd';
-import { useCallback } from 'react';
+import { Button, Input, Table } from 'antd';
+import { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
+import { ColumnsType } from 'antd/es/table';
+import { User } from '@/features/user/types';
 import Universities from './University';
 
+const columns: ColumnsType<User> = [
+  {
+    title: `User Id`,
+    dataIndex: `userId`,
+    width: 40,
+  },
+  {
+    title: `이름`,
+    dataIndex: `nickname`,
+    width: 40,
+  },
+  {
+    title: `대학교`,
+    dataIndex: `university`,
+    render: (value) => {
+      return Universities[Number(value) - 1]?.name;
+    },
+    width: 50,
+  },
+  {
+    title: `신청 여부`,
+    dataIndex: `isVerified`,
+    render: (value) => {
+      if (value) {
+        return `O`;
+      }
+      if (!value) {
+        return ``;
+      }
+      return ``;
+    },
+    width: 30,
+  },
+  {
+    title: `승인 여부`,
+    dataIndex: `approval`,
+    render: (value) => {
+      if (value === null) {
+        return ``;
+      }
+      if (value) {
+        return `O`;
+      }
+      return `X`;
+    },
+    width: 30,
+  },
+];
+
 const StudentcardPage = () => {
-  const { data: users } = useGetAdminUserStudentCardQuery();
+  // 학생증 인증 승인/거절
+  const { data: applyStudentCard } = useGetAdminUserStudentCardQuery();
   const [verifyUser] = usePutAdminUsersUserIdStudentCardVerifyMutation();
   const [declineUser] = usePutAdminUsersUserIdStudentCardDeclineMutation();
 
@@ -38,9 +91,30 @@ const StudentcardPage = () => {
     [declineUser],
   );
 
+  // 전체 회원 학생증 인증 여부 목록
+  const { data } = useGetAdminUsersQuery();
+  const [keyword, setKeyword] = useState(``);
+  const onSearch = useCallback((value: string) => {
+    setKeyword(value);
+  }, []);
+
+  const users = useMemo(() => {
+    if (!data) {
+      return [];
+    }
+    if (!keyword) {
+      return data.users;
+    }
+    return data.users.filter((user) => {
+      const searchStr = user.nickname;
+      return searchStr.search(keyword) > -1;
+    });
+  }, [data, keyword]);
+
   return (
     <LayoutWithHeader>
-      {users?.users.map((user) => {
+      <Title>학생증 인증</Title>
+      {applyStudentCard?.users.map((user) => {
         return (
           <Section center my="32px" display="flex" key={user.userId}>
             <ImgContainer>
@@ -48,7 +122,9 @@ const StudentcardPage = () => {
 
               <DetailContainer>
                 <Info>{`이름 : ${user.nickname}`}</Info>
-                <Info>{`성별 : ${user.gender}`}</Info>
+                <Info>{`성별 : ${
+                  user.gender === `female` ? `여자` : `남자`
+                }`}</Info>
                 <Info>{`학교 : ${
                   Universities[Number(user.university) - 1]?.name
                 }`}</Info>
@@ -62,21 +138,67 @@ const StudentcardPage = () => {
           </Section>
         );
       })}
+      <Section center my="50px" display="flex">
+        <Title>전체 회원 학생증 인증 여부</Title>
+        <InputContainer>
+          <Input.Search
+            placeholder="이름 검색"
+            allowClear
+            enterButton="검색"
+            size="large"
+            onSearch={onSearch}
+          />
+        </InputContainer>
+      </Section>
+      <Section center my="32px" display="flex">
+        <Container>
+          <TableContainer>
+            <Table
+              rowKey="userId"
+              dataSource={users}
+              columns={columns}
+              pagination={{ position: [`bottomCenter`], defaultPageSize: 100 }}
+            />
+          </TableContainer>
+        </Container>
+      </Section>
     </LayoutWithHeader>
   );
 };
 
 export default StudentcardPage;
 
+const Title = styled.h2`
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  margin: 40px 0;
+`;
+
+const Container = styled.div`
+  .ant-table-thead > tr > th {
+    padding: 8px;
+  }
+  .ant-table-tbody > tr > td {
+    padding: 8px;
+  }
+`;
+
+const TableContainer = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+`;
+
 const ImgContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  margin: 0 auto;
+  max-width: 900px;
 `;
 
 const Img = styled.img`
-  height: 300px;
+  height: 400px;
 `;
 
 const DetailContainer = styled.div`
@@ -103,4 +225,9 @@ const ButtonBox = styled.div`
 const Btn = styled(Button)`
   background-color: #eb8888;
   color: #ffffff;
+`;
+
+const InputContainer = styled.div`
+  max-width: 400px;
+  margin: 0 auto;
 `;

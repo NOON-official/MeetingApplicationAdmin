@@ -1,14 +1,16 @@
 export interface User {
   userId: number;
   nickname: string;
-  matchingStatus: string;
-  phone: string;
+  matchingStatus?: string;
+  phone?: string;
   createdAt: string;
-  referralId: string;
-  ticketCount: number;
-  discount50CouponCount: number;
-  freeCouponCount: number;
-  userInvitaionCount: number;
+  referralId?: string;
+  ticketCount?: number;
+  discount50CouponCount?: number;
+  freeCouponCount?: number;
+  userInvitaionCount?: number;
+  isVerified?: boolean;
+  approval?: boolean | null;
 }
 
 export interface AdminUsersResult {

@@ -20,6 +20,11 @@ const columns: ColumnsType<AppliedAndRecieved> = [
     width: 120,
   },
   {
+    title: `Matching Id`,
+    dataIndex: `matchingId`,
+    width: 40,
+  },
+  {
     title: `Team ID`,
     dataIndex: `teamId`,
     width: 50,
@@ -53,29 +58,9 @@ const columns: ColumnsType<AppliedAndRecieved> = [
 
 export default function AppliedAndReceivedTeamTable() {
   const { data } = useGetAdminMatchingsAppliedQuery();
-  // const { data: maleTwoTeamData } = useGetAdminTeamsQuery({
-  //   membercount: 2,
-  //   gender: `male`,
-  //   status: `MATCHED`,
-  // });
-  // const { data: femaleTwoTeamData } = useGetAdminTeamsQuery({
-  //   membercount: 2,
-  //   gender: `female`,
-  //   status: `MATCHED`,
-  // });
-  // const { data: maleThreeTeamData } = useGetAdminTeamsQuery({
-  //   membercount: 3,
-  //   gender: `male`,
-  //   status: `MATCHED`,
-  // });
-  // const { data: femaleThreeTeamData } = useGetAdminTeamsQuery({
-  //   membercount: 3,
-  //   gender: `female`,
-  //   status: `MATCHED`,
-  // });
 
   const teams = useMemo(() => {
-    return data ? data.appliedandreceiveds : [];
+    return data ? data.appliedandreceiveds.filter((x) => x.matchingId) : [];
   }, [data]);
 
   return (

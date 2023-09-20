@@ -1,9 +1,9 @@
 import Section from '@/components/Section';
 import {
-  useGetAdminUserStudentCardQuery,
   usePutAdminUsersUserIdStudentCardVerifyMutation,
   usePutAdminUsersUserIdStudentCardDeclineMutation,
   useGetAdminUsersQuery,
+  useGetAdminStudentCardImgQuery,
 } from '@/features/user/api';
 import LayoutWithHeader from '@/layouts/LayoutWithHeader';
 import { Button, Input, Table } from 'antd';
@@ -17,6 +17,7 @@ const columns: ColumnsType<User> = [
   {
     title: `User Id`,
     dataIndex: `userId`,
+    sorter: (a, b) => a.userId - b.userId,
     width: 40,
   },
   {
@@ -62,7 +63,7 @@ const columns: ColumnsType<User> = [
 
 const StudentcardPage = () => {
   // 학생증 인증 승인/거절
-  const { data: applyStudentCard } = useGetAdminUserStudentCardQuery();
+  const { data: applyStudentCard } = useGetAdminStudentCardImgQuery();
   const [verifyUser] = usePutAdminUsersUserIdStudentCardVerifyMutation();
   const [declineUser] = usePutAdminUsersUserIdStudentCardDeclineMutation();
 
@@ -91,7 +92,7 @@ const StudentcardPage = () => {
 
   // 전체 회원 학생증 인증 여부 목록
   const { data } = useGetAdminUsersQuery();
-  console.log(data);
+
   const [keyword, setKeyword] = useState(``);
   const onSearch = useCallback((value: string) => {
     setKeyword(value);
@@ -102,12 +103,14 @@ const StudentcardPage = () => {
       return [];
     }
     if (!keyword) {
-      return data.users;
+      return data.users.filter((user) => user.isVerified === true);
     }
-    return data.users.filter((user) => {
-      const searchStr = user.nickname;
-      return searchStr.search(keyword) > -1;
-    });
+    return data.users
+      .filter((user) => user.isVerified === true)
+      .filter((user) => {
+        const searchStr = user.nickname;
+        return searchStr.search(keyword) > -1;
+      });
   }, [data, keyword]);
 
   return (

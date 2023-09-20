@@ -1,9 +1,7 @@
 import Section from '@/components/Section';
 import { useGetAdminTeamCountQuery } from '@/features/team/api';
 import LayoutWithHeader from '@/layouts/LayoutWithHeader';
-import { Button, Col, Row, Input } from 'antd';
-import { ManOutlined, WomanOutlined } from '@ant-design/icons';
-import { useCallback, useState } from 'react';
+import { Col, Row } from 'antd';
 import styled from 'styled-components';
 import TeamTable from './TeamTable';
 
@@ -24,22 +22,34 @@ const IndexPage = () => {
         <StatTable>
           <tbody>
             <tr>
+              <td />
+              <td>남</td>
+              <td>여</td>
+              <td>전체</td>
+            </tr>
+            <tr>
               <td>2:2</td>
-              <td>남 : {twoman}</td>
-              <td>여 : {twogirl}</td>
-              <td>전체 : {twoman + twogirl}</td>
+              <td>{twoman}</td>
+              <td>{twogirl}</td>
+              <td>{twoman + twogirl}</td>
             </tr>
             <tr>
               <td>3:3</td>
-              <td>남 : {threeman}</td>
-              <td>여 : {threegirl}</td>
-              <td>전체 : {threeman + threegirl}</td>
+              <td>{threeman}</td>
+              <td>{threegirl}</td>
+              <td>{threeman + threegirl}</td>
             </tr>
             <tr>
               <td>4:4</td>
-              <td>남 : {fourman}</td>
-              <td>여 : {fourgirl}</td>
-              <td>전체 : {fourman + fourgirl}</td>
+              <td>{fourman}</td>
+              <td>{fourgirl}</td>
+              <td>{fourman + fourgirl}</td>
+            </tr>
+            <tr style={{ color: `#eb8888` }}>
+              <td>합계</td>
+              <td>{twoman + threeman + fourman}</td>
+              <td>{twogirl + threegirl + fourgirl}</td>
+              <td />
             </tr>
           </tbody>
         </StatTable>

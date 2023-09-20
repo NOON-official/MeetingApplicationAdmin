@@ -1,25 +1,25 @@
-import {
-  useDeleteMatchingIdMutation,
-  useGetAdminMatchingsSucceededQuery,
-} from '@/features/team/api';
+import { useGetAdminMatchingsSucceededQuery } from '@/features/team/api';
 import { Matching } from '@/features/team/types';
-import { Button, Space, Table } from 'antd';
+import { Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 export default function MatchDoneTeamTable() {
   const { data: matchingData } = useGetAdminMatchingsSucceededQuery();
 
   const matchings = useMemo(() => {
-    return matchingData ? matchingData.matchings : [];
+    return matchingData
+      ? matchingData.matchings.filter((x) => x.matchedAt)
+      : [];
   }, [matchingData]);
 
   const columns: ColumnsType<Matching> = [
     {
       title: `Matching ID`,
       dataIndex: `matchingId`,
+      sorter: (a, b) => a.matchingId - b.matchingId,
       width: 100,
     },
     {

@@ -3,6 +3,7 @@ import {
   useGetAdminTeamsQuery,
 } from '@/features/team/api';
 import { Team } from '@/features/team/types';
+import { useGetAdminUsersQuery } from '@/features/user/api';
 import getArea from '@/utils/getArea';
 import getUniversity from '@/utils/getUniversity';
 import { Button, Space, Table } from 'antd';
@@ -20,7 +21,9 @@ export default function TeamTable({ gender }: AppliedTeamTableProps) {
   const { data } = useGetAdminTeamsQuery({
     gender,
   });
-
+  const { data: studentCard } = useGetAdminUsersQuery();
+  console.log(`user`, studentCard);
+  console.log(`team`, data);
   const onDeleteTeam = useCallback(
     async (team: Team) => {
       if (window.confirm(`정말 ${team.teamId}팀을 삭제하시겠습니까?`)) {
@@ -34,7 +37,7 @@ export default function TeamTable({ gender }: AppliedTeamTableProps) {
     },
     [deleteTeamId],
   );
-  console.log(data);
+
   const columns: ColumnsType<Team> = [
     {
       title: `시간`,
@@ -47,6 +50,16 @@ export default function TeamTable({ gender }: AppliedTeamTableProps) {
       },
       defaultSortOrder: `descend`,
       width: 120,
+    },
+    {
+      title: `학생증 인증`,
+      dataIndex: `userId`,
+      render: (value) => {
+        return studentCard?.users.filter((x) => x.userId === value)[0].approval
+          ? `O`
+          : `X`;
+      },
+      width: 60,
     },
     {
       title: `Team ID`,

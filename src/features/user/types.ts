@@ -17,7 +17,7 @@ export interface AdminUsersResult {
   users: User[];
 }
 
-export interface UserStudentCard {
+export interface UserStudentCardImg {
   userId: number;
   nickname: string;
   birth: number;
@@ -26,6 +26,6 @@ export interface UserStudentCard {
   studentCardUrl: string;
 }
 
-export interface AdminUserStudentCard {
-  users: UserStudentCard[];
+export interface AdminUserStudentCardImg {
+  users: UserStudentCardImg[];
 }

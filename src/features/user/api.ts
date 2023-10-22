@@ -29,29 +29,29 @@ const userApi = createApi({
       }),
       providesTags: [`Users`],
     }),
-    postCoupon: builder.mutation<
+    postAdminTing: builder.mutation<
       any,
-      { userId: number; couponTypeId: number; expiresAt: string }
+      {
+        tingUserId: number;
+        tingCount: number;
+      }
     >({
-      query({ userId, couponTypeId, expiresAt }) {
+      query({ tingUserId, tingCount }) {
         return {
-          url: `admin/users/coupons/${userId}`,
+          url: `admin/users/${tingUserId}/tings`,
           method: `POST`,
-          body: {
-            couponTypeId,
-            expiresAt,
-          },
+          body: { tingCount },
         };
       },
       invalidatesTags: [`Users`],
     }),
-    deleteTicket: builder.mutation<
+    deleteAdminTing: builder.mutation<
       any,
-      { userId: number; ticketCount: number }
+      { tingUserId: number; tingCount: number }
     >({
-      query({ userId, ticketCount }) {
+      query({ tingUserId, tingCount }) {
         return {
-          url: `admin/users/${userId}/tickets/${ticketCount}`,
+          url: `admin/users/${tingUserId}/tings/${tingCount}`,
           method: `DELETE`,
         };
       },
@@ -96,8 +96,8 @@ const userApi = createApi({
 export const {
   useGetAdminUsersQuery,
   useGetAdminStudentCardImgQuery,
-  usePostCouponMutation,
-  useDeleteTicketMutation,
+  usePostAdminTingMutation,
+  useDeleteAdminTingMutation,
   usePutAdminUsersUserIdStudentCardVerifyMutation,
   usePutAdminUsersUserIdStudentCardDeclineMutation,
   usePostAdminUsersTingMutation,

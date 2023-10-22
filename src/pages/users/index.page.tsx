@@ -1,19 +1,17 @@
 import Section from '@/components/Section';
 import {
   useGetAdminUsersQuery,
-  usePostCouponMutation,
-  useDeleteTicketMutation,
-  usePostAdminUsersTingMutation,
+  useDeleteAdminTingMutation,
+  usePostAdminTingMutation,
 } from '@/features/user/api';
 import { User } from '@/features/user/types';
 import LayoutWithHeader from '@/layouts/LayoutWithHeader';
 import { ColumnsType } from 'antd/es/table';
-import { Input, Table } from 'antd';
-import type { MenuProps, DatePickerProps } from 'antd';
+import { Button, Input, Space, Table } from 'antd';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { useCallback, useMemo, useState } from 'react';
-import { CouponTypes } from '../../config/constants';
+import { TagOutlined, UserOutlined } from '@ant-design/icons';
 
 const columns: ColumnsType<User> = [
   {
@@ -55,16 +53,6 @@ const columns: ColumnsType<User> = [
     width: 100,
   },
   {
-    title: `50% 쿠폰`,
-    dataIndex: `discount50CouponCount`,
-    width: 100,
-  },
-  {
-    title: `무료 쿠폰`,
-    dataIndex: `freeCouponCount`,
-    width: 100,
-  },
-  {
     title: `추천 회원`,
     dataIndex: `userInvitationCount`,
     width: 100,
@@ -74,16 +62,11 @@ const columns: ColumnsType<User> = [
 const UsersPage = () => {
   const { data } = useGetAdminUsersQuery();
   const [keyword, setKeyword] = useState(``);
-  const [issueCouponUserId, setIssueCouponUserId] = useState<number>();
-  const [issueCouponTypeId, setIssueCouponTypeId] = useState<number>(1);
-  const [issueCouponExpireDate, setIssueCouponExpireDate] = useState(
-    dayjs().add(2, `month`) || null,
-  );
-  const [deleteTicketUserId, setDeleteTicketUserId] = useState<number>();
-  const [deleteTicketCount, setDeleteTicketCount] = useState<number>();
-  const [postCoupon] = usePostCouponMutation();
-  const [deleteTicket] = useDeleteTicketMutation();
-  const [userTing] = usePostAdminUsersTingMutation();
+  const [tingCount, setTingCount] = useState<number>();
+  const [tingUserId, setTingUserId] = useState<number>();
+
+  const [postTing] = usePostAdminTingMutation();
+  const [deleteTing] = useDeleteAdminTingMutation();
 
   const users = useMemo(() => {
     if (!data) {
@@ -102,38 +85,21 @@ const UsersPage = () => {
     setKeyword(value);
   }, []);
 
-  const onChangeUserId = useCallback((event: any) => {
-    setIssueCouponUserId(event.target.value);
+  const onChangeTingUserId = useCallback((event: any) => {
+    setTingUserId(Number(event.target.value));
   }, []);
 
-  const onClickCouponTypeMenu: MenuProps['onClick'] = (event) => {
-    setIssueCouponTypeId(Number(event.key));
-  };
+  const onChangeTingCount = useCallback((event: any) => {
+    setTingCount(Number(event.target.value));
+  }, []);
 
-  const items: MenuProps['items'] = CouponTypes.map((c) => {
-    return { label: c.name, key: c.id };
-  });
-
-  const menuProps = {
-    items,
-    onClick: onClickCouponTypeMenu,
-  };
-
-  const onChangeDate: DatePickerProps['onChange'] = (date) => {
-    if (date) setIssueCouponExpireDate(date);
-  };
-
-  const onClickIssueCouponButton = useCallback(async () => {
-    const userId = Number(issueCouponUserId);
-    const couponTypeId = issueCouponTypeId;
-    const expiresAt = issueCouponExpireDate?.format(`YYYY-MM-DD`);
-
-    if (!userId || !couponTypeId || !expiresAt) {
+  const onClickGiveTingButton = useCallback(async () => {
+    if (!tingUserId || !tingCount) {
       window.alert(`모든 정보를 입력해주세요`);
       return;
     }
 
-    const user = users.find((u) => u.userId === userId);
+    const user = users.find((u) => u.userId === tingUserId);
     if (!user) {
       window.alert(`존재하지 않는 유저입니다.`);
       return;
@@ -141,154 +107,98 @@ const UsersPage = () => {
 
     if (
       window.confirm(
-        `${userId}번 ${
-          users.find((u) => u.userId === userId)?.nickname
-        } 유저에게 [${
-          CouponTypes.find((c) => c.id === couponTypeId)?.name
-        }]을 발급하시겠습니까? (만료 일자: ${expiresAt})`,
+        `${tingUserId}번 ${
+          users.find((u) => u.userId === tingUserId)?.nickname
+        } 유저에게 ${tingCount} 팅을 지급하시겠어요?`,
       )
     ) {
       try {
-        await postCoupon({
-          userId,
-          couponTypeId,
-          expiresAt,
+        await postTing({
+          tingUserId,
+          tingCount,
         }).unwrap();
-        window.alert(`쿠폰이 발급되었습니다`);
-      } catch (e) {
-        window.alert(`쿠폰 발급중 오류가 발생하였습니다`);
-      }
-    }
-  }, [
-    postCoupon,
-    issueCouponUserId,
-    issueCouponTypeId,
-    issueCouponExpireDate,
-    users,
-  ]);
-
-  const onChangeDeleteTicketUserId = useCallback((event: any) => {
-    setDeleteTicketUserId(event.target.value);
-  }, []);
-
-  const onChangeDeleteTicketCount = useCallback((event: any) => {
-    setDeleteTicketCount(event.target.value);
-  }, []);
-
-  const onClickDeleteTicketButton = useCallback(async () => {
-    const userId = Number(deleteTicketUserId);
-    const ticketCount = Number(deleteTicketCount);
-
-    if (!userId || !ticketCount) {
-      window.alert(`모든 정보를 입력해주세요`);
-      return;
-    }
-
-    const user = users.find((u) => u.userId === userId);
-    if (!user) {
-      window.alert(`존재하지 않는 유저입니다.`);
-      return;
-    }
-
-    if (
-      window.confirm(
-        `정말 ${userId}번 ${
-          users.find((u) => u.userId === userId)?.nickname
-        } 유저의 이용권 ${ticketCount}장을 삭제하시겠습니까?`,
-      )
-    ) {
-      try {
-        await deleteTicket({
-          userId,
-          ticketCount,
-        }).unwrap();
-        window.alert(`이용권 ${ticketCount}장이 삭제되었습니다`);
+        window.alert(`팅이 지급되었습니다`);
       } catch (e: any) {
         if (e.data.message) window.alert(e.data.message);
-        else window.alert(`이용권 삭제중 오류가 발생하였습니다`);
+        else window.alert(`팅 삭제중 오류가 발생하였습니다`);
       }
     }
-  }, [deleteTicket, deleteTicketUserId, deleteTicketCount, users]);
+  }, [postTing, tingCount, tingUserId, users]);
 
-  const onClickUserTing = async () => {
-    try {
-      await userTing().unwrap();
-    } catch (err) {
-      console.log(err);
+  const onClickDeleteTingButton = async () => {
+    if (!tingUserId || !tingCount) {
+      window.alert(`모든 정보를 입력해주세요`);
+      return;
+    }
+
+    const user = users.find((u) => u.userId === tingUserId);
+    if (!user) {
+      window.alert(`존재하지 않는 유저입니다.`);
+      return;
+    }
+
+    if (
+      window.confirm(
+        `정말 ${tingUserId}번 ${
+          users.find((u) => u.userId === tingUserId)?.nickname
+        } 유저의 ${tingCount} 팅을 삭제하시겠습니까?`,
+      )
+    ) {
+      try {
+        await deleteTing({
+          tingUserId,
+          tingCount,
+        }).unwrap();
+        window.alert(`${tingCount} 팅이 삭제되었습니다`);
+      } catch (e: any) {
+        if (e.data.message) window.alert(e.data.message);
+        else window.alert(`팅 삭제중 오류가 발생하였습니다`);
+      }
     }
   };
 
   return (
     <LayoutWithHeader>
-      {/* <Section center my="32px" display="flex">
-        <Button size="large" type="primary" onClick={onClickUserTing}>
-          기존 유저티켓을 팅으로 바꾸기!!
-        </Button>
-      </Section> */}
-      {/* <Section center my="32px" display="flex">
-        <UserIdInputContainer>
-          <Input
-            placeholder="유저 ID"
-            allowClear
-            prefix={<UserOutlined />}
-            size="large"
-            value={deleteTicketUserId}
-            onChange={onChangeDeleteTicketUserId}
-          />
-        </UserIdInputContainer>
-        <TicketCountInputContainer>
-          <Input
-            placeholder="이용권 개수"
-            allowClear
-            prefix={<TagOutlined />}
-            size="large"
-            value={deleteTicketCount}
-            onChange={onChangeDeleteTicketCount}
-          />
-        </TicketCountInputContainer>
-        <Button size="large" type="primary" onClick={onClickDeleteTicketButton}>
-          이용권 삭제
-        </Button>
-      </Section> */}
-      {/* <Section center my="32px" display="flex">
-        <UserIdInputContainer>
-          <Input
-            placeholder="유저 ID"
-            allowClear
-            prefix={<UserOutlined />}
-            size="large"
-            value={issueCouponUserId}
-            onChange={onChangeUserId}
-          />
-        </UserIdInputContainer>
-        <IssueCouponDropdownContainer>
-          <Dropdown menu={menuProps}>
-            <Button size="large">
-              <Space>
-                {issueCouponTypeId
-                  ? getCouponType(issueCouponTypeId)?.name
-                  : `쿠폰 선택`}
-                <DownOutlined />
-              </Space>
+      <Section center my="64px" display="flex">
+        <TingTitle>팅 지급/삭제</TingTitle>
+        <Section center my="32px" display="flex">
+          <UserIdInputContainer>
+            <Input
+              placeholder="유저 ID"
+              allowClear
+              prefix={<UserOutlined />}
+              size="large"
+              value={tingUserId}
+              onChange={onChangeTingUserId}
+            />
+          </UserIdInputContainer>
+          <TicketCountInputContainer>
+            <Input
+              placeholder="팅 개수"
+              allowClear
+              prefix={<TagOutlined />}
+              size="large"
+              value={tingCount}
+              onChange={onChangeTingCount}
+            />
+          </TicketCountInputContainer>
+          <Space>
+            <Button size="large" type="primary" onClick={onClickGiveTingButton}>
+              팅 지급
             </Button>
-          </Dropdown>
-        </IssueCouponDropdownContainer>
-        <IssueCouponDateContainer>
-          <DatePicker
-            size="large"
-            placeholder="만료 일자"
-            disabledDate={(current) => {
-              return current && dayjs(current).isBefore(dayjs());
-            }}
-            value={issueCouponExpireDate}
-            onChange={onChangeDate}
-          />
-        </IssueCouponDateContainer>
-        <Button size="large" type="primary" onClick={onClickIssueCouponButton}>
-          쿠폰 발급
-        </Button>
-      </Section> */}
-      <Section center my="32px">
+            <Button
+              size="large"
+              type="primary"
+              onClick={onClickDeleteTingButton}
+            >
+              팅 삭제
+            </Button>
+          </Space>
+        </Section>
+      </Section>
+
+      <Section center my="64px">
+        <TingTitle>전체 회원</TingTitle>
         <InputContainer>
           <Input.Search
             placeholder="검색어 입력 (이름, 전화번호, referral ID)"
@@ -322,6 +232,13 @@ const UsersPage = () => {
   );
 };
 
+const TingTitle = styled.h2`
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+`;
+
 const TableContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -335,18 +252,6 @@ const InputContainer = styled.div`
 const UserIdInputContainer = styled.div`
   display: inline-flex;
   width: 115px;
-  margin: 0 auto;
-  margin-right: 15px;
-`;
-
-const IssueCouponDropdownContainer = styled.div`
-  display: inline-flex;
-  margin-right: 15px;
-`;
-
-const IssueCouponDateContainer = styled.div`
-  display: inline-flex;
-  width: 130px;
   margin: 0 auto;
   margin-right: 15px;
 `;

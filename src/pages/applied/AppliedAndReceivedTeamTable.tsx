@@ -62,8 +62,7 @@ export default function AppliedAndReceivedTeamTable() {
   const teams = useMemo(() => {
     return data ? data.appliedandreceiveds.filter((x) => x.matchingId) : [];
   }, [data]);
-  console.log(data?.appliedandreceiveds);
-  console.log(data?.appliedandreceiveds.filter((x) => x.matchingId));
+
   return (
     <Container>
       <Table

@@ -22,8 +22,7 @@ export default function TeamTable({ gender }: AppliedTeamTableProps) {
     gender,
   });
   const { data: studentCard } = useGetAdminUsersQuery();
-  console.log(`user`, studentCard);
-  console.log(`team`, data);
+
   const onDeleteTeam = useCallback(
     async (team: Team) => {
       if (window.confirm(`정말 ${team.teamId}팀을 삭제하시겠습니까?`)) {

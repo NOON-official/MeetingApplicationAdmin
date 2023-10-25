@@ -8,12 +8,12 @@ import TeamTable from './TeamTable';
 const IndexPage = () => {
   const { data: teamData } = useGetAdminTeamCountQuery();
 
-  const twoman = teamData?.[`2vs2`].male || 0;
-  const twogirl = teamData?.[`2vs2`].female || 0;
-  const threeman = teamData?.[`3vs3`].male || 0;
-  const threegirl = teamData?.[`3vs3`].female || 0;
-  const fourman = teamData?.[`4vs4`].male || 0;
-  const fourgirl = teamData?.[`4vs4`].female || 0;
+  const twoman = teamData?.[`2vs2`]?.male || 0;
+  const twogirl = teamData?.[`2vs2`]?.female || 0;
+  const threeman = teamData?.[`3vs3`]?.male || 0;
+  const threegirl = teamData?.[`3vs3`]?.female || 0;
+  const fourman = teamData?.[`4vs4`]?.male || 0;
+  const fourgirl = teamData?.[`4vs4`]?.female || 0;
 
   return (
     <LayoutWithHeader>

@@ -38,9 +38,8 @@ const userApi = createApi({
     >({
       query({ tingUserId, tingCount }) {
         return {
-          url: `admin/users/${tingUserId}/tings`,
+          url: `admin/users/${tingUserId}/tings/${tingCount}`,
           method: `POST`,
-          body: { tingCount },
         };
       },
       invalidatesTags: [`Users`],

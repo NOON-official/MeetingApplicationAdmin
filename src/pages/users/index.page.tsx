@@ -155,6 +155,7 @@ const UsersPage = () => {
         else window.alert(`팅 삭제중 오류가 발생하였습니다`);
       }
     }
+  };
 
   return (
     <LayoutWithHeader>
